@@ -1,12 +1,14 @@
-
-
-import { encode } from '@msgpack/msgpack';
+import * as msgpack from '@msgpack/msgpack';
 import {
     AtlasWireHeader,
     ATLAS_WIRE_HEADER_LEN,
 } from './header';
 import { AtlasWireMessage } from './message';
 
+
+const encode = (msgpack as any).default.encode;
+console.log('msgpack.encode =', (msgpack as any).encode);
+console.log('msgpack.default =', (msgpack as any).default);
 
 export function encodeHeader(h: AtlasWireHeader): Uint8Array {
     if (h.uid.length !== 16) {

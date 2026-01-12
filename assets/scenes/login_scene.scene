@@ -179,7 +179,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 435.1690821256039,
+    "_orthoHeight": 360,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -336,7 +336,7 @@
       "__id__": 6
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 8
@@ -420,7 +420,7 @@
     "_string": "",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
-    "_actualFontSize": 40,
+    "_actualFontSize": 20,
     "_fontSize": 20,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
@@ -468,7 +468,7 @@
       "__id__": 6
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 11
@@ -673,7 +673,7 @@
       "__id__": 12
     },
     "_returnType": 0,
-    "_string": "",
+    "_string": "123",
     "_tabIndex": 0,
     "_backgroundImage": {
       "__uuid__": "bd1bcaba-bd7d-4a71-b143-997c882383e4@f9941",
@@ -751,7 +751,7 @@
       "__id__": 16
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 18
@@ -832,10 +832,10 @@
       "b": 255,
       "a": 255
     },
-    "_string": "",
+    "_string": "123",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
-    "_actualFontSize": 40,
+    "_actualFontSize": 20,
     "_fontSize": 20,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
@@ -883,7 +883,7 @@
       "__id__": 16
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 21
@@ -1088,7 +1088,7 @@
       "__id__": 22
     },
     "_returnType": 0,
-    "_string": "",
+    "_string": "123",
     "_tabIndex": 0,
     "_backgroundImage": {
       "__uuid__": "bd1bcaba-bd7d-4a71-b143-997c882383e4@f9941",
@@ -1849,6 +1849,12 @@
     },
     "_enabled": true,
     "__prefab": null,
+    "account_edit": {
+      "__id__": 15
+    },
+    "pwd_edit": {
+      "__id__": 25
+    },
     "_id": "9bBLgBVRlDGpjbGQYMJgIG"
   },
   {

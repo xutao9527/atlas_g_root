@@ -16,8 +16,8 @@ export class Net {
         };
 
         this.ws.onmessage = (ev) => {
-            const msg = JSON.parse(ev.data);
-            console.log('[WS] recv', msg);
+
+            console.log('[WS] recv', ev);
 
             // ⭐ 分发给全局
             // EventBus.emit(msg.cmd, msg.data);
@@ -33,7 +33,17 @@ export class Net {
         };
     }
 
-    send(cmd: string, data: any) {
+    
+
+    send(data: Uint8Array | ArrayBuffer) {
+        if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+            this.ws.send(data);
+        } else {
+            console.warn('WebSocket not connected');
+        }
+    }
+
+    sendText(cmd: string, data: any) {
         if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
             console.warn('[WS] not ready');
             return;
