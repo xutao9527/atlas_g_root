@@ -27,7 +27,7 @@ export class AccountMrg extends Component {
             account: account,
             password: password,
         });
-        console.log("123312",basicAuthReq);
+        console.log("[WS] send:",basicAuthReq);
         let raw_msg = basicAuthReq.buildRawMessage();
 
         Global.inst.net.send(raw_msg);

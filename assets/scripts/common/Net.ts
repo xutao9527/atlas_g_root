@@ -17,7 +17,7 @@ export class Net {
 
         this.ws.onmessage = (ev) => {
 
-            console.log('[WS] recv', ev);
+            console.log('[WS] recv:', ev);
 
             // ⭐ 分发给全局
             // EventBus.emit(msg.cmd, msg.data);
