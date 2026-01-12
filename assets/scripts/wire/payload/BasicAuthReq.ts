@@ -1,4 +1,4 @@
-import {WirePayload} from "../base/message";
+import {WirePayload} from "db://assets/scripts/wire/base/message";
 
 export interface BasicAuthReqProps {
     account: string;

@@ -1,6 +1,7 @@
 import { _decorator, Component, director } from 'cc';
+import {Net} from "db://assets/scripts/common/Net";
 const { ccclass } = _decorator;
-import { Net } from './Net';
+
 
 @ccclass('Global')
 export class Global extends Component {

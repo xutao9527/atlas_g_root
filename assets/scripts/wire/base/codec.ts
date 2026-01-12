@@ -1,9 +1,6 @@
 import * as msgpack from '@msgpack/msgpack';
-import {
-    AtlasWireHeader,
-    ATLAS_WIRE_HEADER_LEN,
-} from './header';
-import { AtlasWireMessage } from './message';
+import {ATLAS_WIRE_HEADER_LEN, AtlasWireHeader} from "db://assets/scripts/wire/base/header";
+import {AtlasWireMessage} from "db://assets/scripts/wire/base/message";
 
 
 const encode = (msgpack as any).default.encode;

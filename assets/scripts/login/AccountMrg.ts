@@ -1,6 +1,8 @@
 import { _decorator, Component, EditBox } from 'cc';
-import { Global } from '../common/Global';
-import { BasicAuthReq } from '../wire/payload/auth';
+import {BasicAuthReq} from "db://assets/scripts/wire/payload/BasicAuthReq";
+import {Global} from "db://assets/scripts/common/Global";
+
+
 const { ccclass, property } = _decorator;
 
 @ccclass('AccountMrg')
