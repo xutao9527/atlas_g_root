@@ -1,0 +1,10 @@
+{
+  "name": "atlas_g_root",
+  "uuid": "77d1cf4e-1360-4070-994c-bb0804c72013",
+  "creator": {
+    "version": "3.8.8"
+  },
+  "dependencies": {
+    "@msgpack/msgpack": "^3.1.3"
+  }
+}

@@ -1,0 +1,31 @@
+import { _decorator, Component, director } from 'cc';
+const { ccclass } = _decorator;
+import { Net } from './Net';
+
+@ccclass('Global')
+export class Global extends Component {
+    static inst: Global;
+
+    net: Net = new Net();
+
+    private ws: WebSocket | null = null;
+    private url = 'ws://127.0.0.1:8080/ws';
+
+    protected onLoad(): void {
+        if (Global.inst) {
+            this.node.destroy();
+            return;
+        }
+        Global.inst = this;
+        director.addPersistRootNode(this.node);
+
+        // ⭐ 启动即连接
+        this.net.connect();
+    }
+
+    protected onDestroy(): void {
+        this.net.close();
+    }
+}
+
+
