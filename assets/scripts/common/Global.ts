@@ -9,9 +9,6 @@ export class Global extends Component {
 
     net: Net = new Net();
 
-    private ws: WebSocket | null = null;
-    private url = 'ws://127.0.0.1:8080/ws';
-
     protected onLoad(): void {
         if (Global.inst) {
             this.node.destroy();
