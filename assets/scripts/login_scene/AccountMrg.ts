@@ -49,12 +49,12 @@ export class AccountMrg extends Component {
                 // 🔴 先解绑事件
                 eventBus.off(AuthResp.METHOD, this.authHandler!);
                 eventBus.off(RegisterResp.METHOD, this.regHandler!);
-                setTimeout(() => {
-                    director.loadScene('hall_scene');
-                }, 500);
-                // this.scheduleOnce(() => {
-                //     director.loadScene('hall_scene'); // 你的目标场景名
-                // }, 0.8);
+                // 延迟切换场景，等提示淡出
+                this.scheduleOnce(() => {
+                    director.loadScene('hall_scene', () => {
+                        console.log('hall_scene 已切换');
+                    });
+                }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
             } else {
                 this.showStatus(`登录失败：${msg.payload.error ?? '未知错误'}`);
             }
