@@ -4,6 +4,7 @@ import {Global} from "db://assets/scripts/common/Global";
 import {AtlasWireMessage} from "db://assets/scripts/wire/base/message";
 import {AuthResp} from "db://assets/scripts/wire/payload/AuthResp";
 import {eventBus} from "db://assets/scripts/common/EventBus";
+import {GetTableReq} from "db://assets/scripts/wire/payload/GetTableReq";
 
 
 const { ccclass, property } = _decorator;
@@ -47,6 +48,11 @@ export class AccountMrg extends Component {
             password: password,
         });
         Global.inst.net.sendRequest(basicAuthReq);
+    }
+
+    public onRegisterClick(): void {
+        let getTableReq = new GetTableReq({});
+        Global.inst.net.sendRequest(getTableReq);
     }
 }
 
