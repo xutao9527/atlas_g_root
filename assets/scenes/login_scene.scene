@@ -535,7 +535,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "123",
+    "_string": "111",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 20,
@@ -791,7 +791,7 @@
       "__id__": 15
     },
     "_returnType": 0,
-    "_string": "123",
+    "_string": "111",
     "_tabIndex": 0,
     "_backgroundImage": {
       "__uuid__": "bd1bcaba-bd7d-4a71-b143-997c882383e4@f9941",
@@ -950,7 +950,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "●●●",
+    "_string": "●●●●●●",
     "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 20,
@@ -1206,7 +1206,7 @@
       "__id__": 25
     },
     "_returnType": 0,
-    "_string": "123",
+    "_string": "123123",
     "_tabIndex": 0,
     "_backgroundImage": {
       "__uuid__": "bd1bcaba-bd7d-4a71-b143-997c882383e4@f9941",
