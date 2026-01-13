@@ -1,4 +1,4 @@
-import {_decorator, Component, EditBox, Node,Label, Color, tween} from 'cc';
+import {_decorator, Component, EditBox, Node,Label, Color, tween, director} from 'cc';
 import {BasicAuthReq} from "db://assets/scripts/wire/payload/BasicAuthReq";
 import {Global} from "db://assets/scripts/common/Global";
 import {AtlasWireMessage} from "db://assets/scripts/wire/base/message";
@@ -46,7 +46,15 @@ export class AccountMrg extends Component {
             console.log('[AccountMrg] 收到登录响应:', msg);
             if (msg.payload.ok) {
                 this.showStatus('登录成功!');
-
+                // 🔴 先解绑事件
+                eventBus.off(AuthResp.METHOD, this.authHandler!);
+                eventBus.off(RegisterResp.METHOD, this.regHandler!);
+                setTimeout(() => {
+                    director.loadScene('hall_scene');
+                }, 500);
+                // this.scheduleOnce(() => {
+                //     director.loadScene('hall_scene'); // 你的目标场景名
+                // }, 0.8);
             } else {
                 this.showStatus(`登录失败：${msg.payload.error ?? '未知错误'}`);
             }
@@ -55,6 +63,7 @@ export class AccountMrg extends Component {
             console.log('[AccountMrg] 收到注册响应:', msg);
             if (msg.payload.ok) {
                 this.showStatus(`注册成功!`);
+
             } else {
                 this.showStatus(`注册失败：${msg.payload.message ?? '未知错误'}`);
             }
