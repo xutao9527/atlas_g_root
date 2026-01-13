@@ -1,4 +1,7 @@
 import { _decorator } from 'cc';
+import {WirePayload} from "db://assets/scripts/wire/base/message";
+import {decodeMessage} from "db://assets/scripts/wire/base/codec";
+import {eventBus} from "db://assets/scripts/common/EventBus";
 const { ccclass } = _decorator;
 
 @ccclass('Net')
@@ -15,12 +18,15 @@ export class Net {
             console.log('[WS] connected');
         };
 
-        this.ws.onmessage = (ev) => {
+        this.ws.onmessage = async (event) => {
+            const arrayBuffer = await this.blobToArrayBuffer(event.data);
+            const uint8Arr = new Uint8Array(arrayBuffer);
 
-            console.log('[WS] recv:', ev);
+            let recv_msg= decodeMessage(uint8Arr);
+            console.log('[WS] receive:', recv_msg.payload);
 
             // ⭐ 分发给全局
-            // EventBus.emit(msg.cmd, msg.data);
+            eventBus.emit(recv_msg.header.method, recv_msg);
         };
 
         this.ws.onclose = () => {
@@ -33,22 +39,19 @@ export class Net {
         };
     }
 
-    
-
-    send(data: Uint8Array | ArrayBuffer) {
+    sendRequest<T extends WirePayload>(req: T) {
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-            this.ws.send(data);
+            const rawMsg = req.buildRawMessage();
+            console.log('[WS] send:', req.constructor.name, rawMsg);
+            this.ws.send(rawMsg);
         } else {
             console.warn('WebSocket not connected');
         }
     }
 
-    sendText(cmd: string, data: any) {
-        if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
-            console.warn('[WS] not ready');
-            return;
-        }
-        this.ws.send(JSON.stringify({ cmd, data }));
+    private async blobToArrayBuffer(data: Blob | ArrayBuffer): Promise<ArrayBuffer> {
+        if (data instanceof Blob) return await data.arrayBuffer();
+        return data;
     }
 
     close() {
