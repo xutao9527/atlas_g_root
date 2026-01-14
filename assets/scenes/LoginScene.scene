@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.SceneAsset",
-    "_name": "login_scene",
+    "_name": "LoginScene",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -11,7 +11,7 @@
   },
   {
     "__type__": "cc.Scene",
-    "_name": "login_scene",
+    "_name": "LoginScene",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -245,7 +245,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 457.49049429657794,
+    "_orthoHeight": 379.9578947368421,
     "_near": 1,
     "_far": 2000,
     "_color": {

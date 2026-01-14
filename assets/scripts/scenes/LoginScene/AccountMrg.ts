@@ -52,8 +52,8 @@ export class AccountMrg extends Component {
         if (msg.payload.ok) {
             this.showStatus('登录成功!');
             this.scheduleOnce(() => {
-                director.loadScene('hall_scene', () => {
-                    console.log('hall_scene 已切换');
+                director.loadScene('HallScene', () => {
+                    console.log('HallScene 已切换');
                 });
             }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
         } else {
@@ -66,8 +66,8 @@ export class AccountMrg extends Component {
         if (msg.payload.ok) {
             this.showStatus('登录成功!');
             this.scheduleOnce(() => {
-                director.loadScene('hall_scene', () => {
-                    console.log('hall_scene 已切换');
+                director.loadScene('HallScene', () => {
+                    console.log('HallScene 已切换');
                 });
             }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
         }
