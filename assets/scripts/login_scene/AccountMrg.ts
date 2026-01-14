@@ -8,7 +8,6 @@ import {RegisterReq} from "db://assets/scripts/wire/payload/RegisterReq";
 import {RegisterResp} from "db://assets/scripts/wire/payload/RegisterResp";
 import {TokenAuthReq} from "db://assets/scripts/wire/payload/TokenAuthReq";
 
-
 const {ccclass, property} = _decorator;
 
 @ccclass('AccountMrg')
