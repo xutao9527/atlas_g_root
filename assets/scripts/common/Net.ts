@@ -4,6 +4,7 @@ import {decodeMessage} from "db://assets/scripts/wire/base/codec";
 import {eventBus} from "db://assets/scripts/common/EventBus";
 import {TokenAuthReq} from "db://assets/scripts/wire/payload/TokenAuthReq";
 import {AuthResp} from "db://assets/scripts/wire/payload/AuthResp";
+import {BasicAuthReq} from "db://assets/scripts/wire/payload/BasicAuthReq";
 
 const { ccclass } = _decorator;
 
@@ -17,6 +18,7 @@ export class Net {
 
         // ⭐ 只注册一次
         eventBus.on<AuthResp>(TokenAuthReq.METHOD, this.tokenAuthHandler);
+        eventBus.on<AuthResp>(BasicAuthReq.METHOD, this.tokenAuthHandler);
 
         this.ws = new WebSocket(this.url);
 
@@ -68,7 +70,7 @@ export class Net {
             console.log('[WS] no token, skip token auth');
             return;
         }
-        console.log('[WS] try token auth');
+        //console.log('[WS] try token auth');
         const req = new TokenAuthReq({ token });
         this.sendRequest(req);
     }
@@ -80,7 +82,7 @@ export class Net {
             return;
         }
         if (msg.payload.token) {
-            console.log('[WS] update token');
+            //console.log('[WS] update token');
             sys.localStorage.setItem('token', msg.payload.token);
         }
     }

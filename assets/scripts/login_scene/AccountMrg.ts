@@ -1,4 +1,4 @@
-import {_decorator, Component, EditBox, Node,Label, Color, tween, director, sys} from 'cc';
+import {_decorator, Component, EditBox, Node,Label, Color, tween, director} from 'cc';
 import {BasicAuthReq} from "db://assets/scripts/wire/payload/BasicAuthReq";
 import {Global} from "db://assets/scripts/common/Global";
 import {AtlasWireMessage} from "db://assets/scripts/wire/base/message";
@@ -51,12 +51,7 @@ export class AccountMrg extends Component {
     private basicAuthHandler = (msg: AtlasWireMessage<AuthResp>) => {
         console.log('[AccountMrg]basicAuthHandler 收到登录响应:', msg);
         if (msg.payload.ok) {
-            sys.localStorage.setItem('token',msg.payload.token);
             this.showStatus('登录成功!');
-            // 🔴 先解绑事件
-            eventBus.off(AuthResp.METHOD, this.basicAuthHandler!);
-            eventBus.off(RegisterResp.METHOD, this.basicAuthHandler!);
-            // 延迟切换场景，等提示淡出
             this.scheduleOnce(() => {
                 director.loadScene('hall_scene', () => {
                     console.log('hall_scene 已切换');
@@ -69,6 +64,14 @@ export class AccountMrg extends Component {
 
     private tokenAuthHandler = (msg: AtlasWireMessage<AuthResp>) =>{
         console.log('[AccountMrg]tokenAuthHandler 收到登录响应:', msg);
+        if (msg.payload.ok) {
+            this.showStatus('登录成功!');
+            this.scheduleOnce(() => {
+                director.loadScene('hall_scene', () => {
+                    console.log('hall_scene 已切换');
+                });
+            }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
+        }
     }
 
     onEnable() {
