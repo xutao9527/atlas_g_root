@@ -1,4 +1,4 @@
-import {_decorator, Component, EditBox, Node,Label, Color, tween, director} from 'cc';
+import {_decorator, Component, EditBox, Node,Label, Color, tween, director, sys} from 'cc';
 import {BasicAuthReq} from "db://assets/scripts/wire/payload/BasicAuthReq";
 import {Global} from "db://assets/scripts/common/Global";
 import {AtlasWireMessage} from "db://assets/scripts/wire/base/message";
@@ -6,6 +6,7 @@ import {AuthResp} from "db://assets/scripts/wire/payload/AuthResp";
 import {eventBus} from "db://assets/scripts/common/EventBus";
 import {RegisterReq} from "db://assets/scripts/wire/payload/RegisterReq";
 import {RegisterResp} from "db://assets/scripts/wire/payload/RegisterResp";
+import {TokenAuthReq} from "db://assets/scripts/wire/payload/TokenAuthReq";
 
 
 const {ccclass, property} = _decorator;
@@ -37,52 +38,53 @@ export class AccountMrg extends Component {
     @property(Node)
     status_node: Node | null = null;   // 挂一个 Label 节点
 
-    private authHandler: ((msg: AtlasWireMessage<AuthResp>) => void) | null = null;
+    private registerHandler = (msg: AtlasWireMessage<RegisterResp>) => {
+        console.log('[AccountMrg] 收到注册响应:', msg);
+        if (msg.payload.ok) {
+            this.showStatus(`注册成功!`);
 
-    private regHandler: ((msg: AtlasWireMessage<RegisterResp>) => void) | null = null;
+        } else {
+            this.showStatus(`注册失败：${msg.payload.message ?? '未知错误'}`);
+        }
+    }
+
+    private basicAuthHandler = (msg: AtlasWireMessage<AuthResp>) => {
+        console.log('[AccountMrg]basicAuthHandler 收到登录响应:', msg);
+        if (msg.payload.ok) {
+            sys.localStorage.setItem('token',msg.payload.token);
+            this.showStatus('登录成功!');
+            // 🔴 先解绑事件
+            eventBus.off(AuthResp.METHOD, this.basicAuthHandler!);
+            eventBus.off(RegisterResp.METHOD, this.basicAuthHandler!);
+            // 延迟切换场景，等提示淡出
+            this.scheduleOnce(() => {
+                director.loadScene('hall_scene', () => {
+                    console.log('hall_scene 已切换');
+                });
+            }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
+        } else {
+            this.showStatus(`登录失败：${msg.payload.error ?? '未知错误'}`);
+        }
+    }
+
+    private tokenAuthHandler = (msg: AtlasWireMessage<AuthResp>) =>{
+        console.log('[AccountMrg]tokenAuthHandler 收到登录响应:', msg);
+    }
 
     onEnable() {
-        this.authHandler = (msg: AtlasWireMessage<AuthResp>) => {
-            console.log('[AccountMrg] 收到登录响应:', msg);
-            if (msg.payload.ok) {
-                this.showStatus('登录成功!');
-                // 🔴 先解绑事件
-                eventBus.off(AuthResp.METHOD, this.authHandler!);
-                eventBus.off(RegisterResp.METHOD, this.regHandler!);
-                // 延迟切换场景，等提示淡出
-                this.scheduleOnce(() => {
-                    director.loadScene('hall_scene', () => {
-                        console.log('hall_scene 已切换');
-                    });
-                }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
-            } else {
-                this.showStatus(`登录失败：${msg.payload.error ?? '未知错误'}`);
-            }
-        };
-        this.regHandler = (msg: AtlasWireMessage<RegisterResp>) => {
-            console.log('[AccountMrg] 收到注册响应:', msg);
-            if (msg.payload.ok) {
-                this.showStatus(`注册成功!`);
-
-            } else {
-                this.showStatus(`注册失败：${msg.payload.message ?? '未知错误'}`);
-            }
-        };
-        eventBus.on<AuthResp>(AuthResp.METHOD, this.authHandler);
-        eventBus.on<RegisterResp>(RegisterResp.METHOD, this.regHandler);
+        console.log("AccountMrg onEnable")
+        eventBus.on(RegisterResp.METHOD, this.registerHandler);
+        eventBus.on(BasicAuthReq.METHOD, this.basicAuthHandler);
+        eventBus.on(TokenAuthReq.METHOD, this.tokenAuthHandler);
     }
 
     onDisable() {
-        // 组件销毁时取消订阅
-        if (this.authHandler) {
-            eventBus.off(AuthResp.METHOD, this.authHandler);
-            this.authHandler = null;
-        }
-        if (this.regHandler) {
-            eventBus.off(RegisterResp.METHOD, this.regHandler);
-            this.authHandler = null;
-        }
+        console.log("AccountMrg onDisable")
+        eventBus.off(RegisterResp.METHOD, this.registerHandler);
+        eventBus.off(BasicAuthReq.METHOD, this.basicAuthHandler);
+        eventBus.on(TokenAuthReq.METHOD, this.tokenAuthHandler);
     }
+
 
     public onLoginClick(): void {
         const account = this.account_edit?.string ?? '';
