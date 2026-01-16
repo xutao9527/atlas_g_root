@@ -18,6 +18,11 @@ export class HallMrg extends Component {
         Global.sendRequest(getTableReq);
     }
 
+    start(){
+        let getTableReq = new GetTableReq({});
+        Global.sendRequest(getTableReq);
+    }
+
     onEnable(){
         eventBus.on(GetTableReq.METHOD, this.getTableHandler);
     }

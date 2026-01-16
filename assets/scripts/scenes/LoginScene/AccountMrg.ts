@@ -58,7 +58,7 @@ export class AccountMrg extends Component {
                 });
             }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
         } else {
-            this.showStatus(`登录失败：${msg.payload.error ?? '未知错误'}`);
+            this.showStatus(`登录失败：${msg.payload ?? '未知错误'}`);
         }
     }
 
