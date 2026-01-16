@@ -245,7 +245,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 379.9578947368421,
+    "_orthoHeight": 360,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -362,9 +362,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 11,
-      "g": 11,
-      "b": 12,
+      "r": 39,
+      "g": 55,
+      "b": 77,
       "a": 255
     },
     "_spriteFrame": {
@@ -803,9 +803,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 157,
+      "g": 178,
+      "b": 191,
       "a": 255
     },
     "_spriteFrame": {
@@ -1218,9 +1218,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 157,
+      "g": 178,
+      "b": 191,
       "a": 255
     },
     "_spriteFrame": {
@@ -1498,9 +1498,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 245,
-      "g": 245,
-      "b": 245,
+      "r": 221,
+      "g": 230,
+      "b": 237,
       "a": 255
     },
     "_spriteFrame": {
@@ -1824,9 +1824,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 245,
-      "g": 245,
-      "b": 245,
+      "r": 221,
+      "g": 230,
+      "b": 237,
       "a": 255
     },
     "_spriteFrame": {

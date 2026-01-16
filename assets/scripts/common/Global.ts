@@ -1,6 +1,6 @@
 import { _decorator, Component, director } from 'cc';
 import {Net} from "db://assets/scripts/common/Net";
-import {WirePayload} from "db://assets/scripts/wire/base/message";
+import {WirePayload} from "db://assets/scripts/wire/base/Message";
 const { ccclass } = _decorator;
 
 @ccclass('Global')

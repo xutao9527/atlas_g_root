@@ -1,5 +1,5 @@
 import { _decorator, Component } from 'cc';
-import {AtlasWireMessage} from "db://assets/scripts/wire/base/message";
+import {AtlasWireMessage} from "db://assets/scripts/wire/base/Message";
 import {GetTableResp} from "db://assets/scripts/wire/payload/GetTableResp";
 import {eventBus} from "db://assets/scripts/common/EventBus";
 import {GetTableReq} from "db://assets/scripts/wire/payload/GetTableReq";
@@ -9,7 +9,9 @@ const { ccclass } = _decorator;
 @ccclass('HallMrg')
 export class HallMrg extends Component {
 
-    private getTableHandler: ((msg: AtlasWireMessage<GetTableResp>) => void) | null = null;
+    private getTableHandler = (msg: AtlasWireMessage<GetTableResp>) => {
+        console.log('HallMrg getTableHandler ', msg);
+    }
 
     onGetTableClick(){
         let getTableReq = new GetTableReq({});
@@ -17,14 +19,12 @@ export class HallMrg extends Component {
     }
 
     onEnable(){
-        this.getTableHandler = (msg: AtlasWireMessage<GetTableResp>) => {
-            console.log("table list",msg.payload.tables)
-        }
-        eventBus.on(GetTableResp.METHOD,this.getTableHandler)
+        eventBus.on(GetTableReq.METHOD, this.getTableHandler);
     }
 
-
-
+    onDisable(){
+        eventBus.off(GetTableReq.METHOD, this.getTableHandler);
+    }
 
 }
 

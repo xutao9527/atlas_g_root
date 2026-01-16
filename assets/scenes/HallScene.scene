@@ -11,7 +11,7 @@
   },
   {
     "__type__": "cc.Scene",
-    "_name": "hall_scene",
+    "_name": "HallScene",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -184,7 +184,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 379.9578947368421,
+    "_orthoHeight": 360,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -301,9 +301,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 11,
-      "g": 11,
-      "b": 12,
+      "r": 39,
+      "g": 55,
+      "b": 77,
       "a": 255
     },
     "_spriteFrame": {
@@ -549,9 +549,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 221,
+      "g": 230,
+      "b": 237,
       "a": 255
     },
     "_spriteFrame": {
@@ -1290,9 +1290,9 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 77,
-      "g": 59,
-      "b": 59,
+      "r": 82,
+      "g": 109,
+      "b": 130,
       "a": 255
     },
     "_spriteFrame": {

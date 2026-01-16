@@ -1,4 +1,4 @@
-import {AtlasWireMessage, WirePayload} from "db://assets/scripts/wire/base/message";
+import {AtlasWireMessage, WirePayload} from "db://assets/scripts/wire/base/Message";
 
 type Handler<T extends WirePayload> = (data: AtlasWireMessage<T>) => void;
 

@@ -1,12 +1,13 @@
 import {_decorator, Component, EditBox, Node,Label, Color, tween, director} from 'cc';
 import {BasicAuthReq} from "db://assets/scripts/wire/payload/BasicAuthReq";
 import {Global} from "db://assets/scripts/common/Global";
-import {AtlasWireMessage} from "db://assets/scripts/wire/base/message";
+
 import {AuthResp} from "db://assets/scripts/wire/payload/AuthResp";
 import {eventBus} from "db://assets/scripts/common/EventBus";
 import {RegisterReq} from "db://assets/scripts/wire/payload/RegisterReq";
 import {RegisterResp} from "db://assets/scripts/wire/payload/RegisterResp";
 import {TokenAuthReq} from "db://assets/scripts/wire/payload/TokenAuthReq";
+import {AtlasWireMessage} from "db://assets/scripts/wire/base/Message";
 
 const {ccclass, property} = _decorator;
 

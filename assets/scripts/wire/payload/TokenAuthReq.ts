@@ -1,4 +1,4 @@
-import {WirePayload} from "db://assets/scripts/wire/base/message";
+import {WirePayload} from "db://assets/scripts/wire/base/Message";
 
 export interface TokenAuthReqProps {
     token: string;

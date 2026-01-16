@@ -1,6 +1,5 @@
-
-import {encodeMessage} from "db://assets/scripts/wire/base/codec";
-import {AtlasWireHeader, AtlasWireKind} from "db://assets/scripts/wire/base/header";
+import {encodeMessage} from "db://assets/scripts/wire/base/Codec";
+import {AtlasWireHeader, AtlasWireKind} from "db://assets/scripts/wire/base/Header";
 
 export interface AtlasWireMessage<T> {
     header: AtlasWireHeader;
