@@ -6,6 +6,7 @@ import {AtlasWireMessage} from "db://assets/scripts/wire/base/Message"
 import {TableItem} from "db://assets/scripts/scenes/HallScene/prefab/TableItem"
 import {SitTableResp} from "db://assets/scripts/wire/payload/SitTableResp";
 import {SitTableReq} from "db://assets/scripts/wire/payload/SitTableReq";
+import {Global} from "db://assets/scripts/common/Global";
 
 const { ccclass, property } = _decorator
 
@@ -20,15 +21,16 @@ export class TableList extends Component {
 
 
     private getTableHandler = (msg: AtlasWireMessage<GetTableResp>) => {
-        console.log('TableList getTableHandler ', msg)
+        // console.log('TableList getTableHandler ', msg)
         this.refreshList(msg.payload.tables)
     }
 
     private sitTableRespHandler = (msg: AtlasWireMessage<SitTableResp>) => {
         console.log('TableList sitTableRespHandler ', msg);
         if (msg.payload.ok) {
+            Global.inst.currentTableId = msg.payload.table_id
             this.scheduleOnce(() => {
-                director.loadScene('HoldemScene', () => {
+                director.loadScene('HoldemScene', (err,scene) => {
                     console.log('HoldemScene 已切换');
                 });
             }, 0.8); // 0.5 秒提示 + 0.3 秒淡出

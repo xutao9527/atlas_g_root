@@ -11,6 +11,8 @@ export class Global extends Component {
 
     net: Net = new Net();
 
+    currentTableId: string | null
+
     protected onLoad(): void {
         if (Global.inst) {
             this.node.destroy();

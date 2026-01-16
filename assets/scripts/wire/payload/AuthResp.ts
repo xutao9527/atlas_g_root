@@ -5,7 +5,6 @@ export interface AuthRespProps {
     uid: string | null;
     token: string | null;
     expire_at: number | null;
-    error: string | null;
 }
 
 export class AuthResp extends WirePayload{
@@ -15,7 +14,6 @@ export class AuthResp extends WirePayload{
     uid: string | null;
     token: string | null;
     expire_at: number | null;
-    error: string | null;
 
     constructor(
         props: AuthRespProps
@@ -25,6 +23,5 @@ export class AuthResp extends WirePayload{
         this.uid = props.uid;
         this.token = props.token;
         this.expire_at = props.expire_at;
-        this.error = props.error;
     }
 }

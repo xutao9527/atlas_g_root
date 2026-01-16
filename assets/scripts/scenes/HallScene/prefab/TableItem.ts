@@ -20,7 +20,6 @@ export class TableItem extends Component {
     /** 当前桌子数据 */
     private tableData: any = null;
 
-
     setData(table: any) {
         this.tableData = table;
 
@@ -72,15 +71,7 @@ export class TableItem extends Component {
         }
     }
 
-
     private onClickSeat(seatIndex: number) {
-        console.log(
-            'click seat',
-            seatIndex,
-            'table',
-            this.tableIdLabel.string
-        );
-
         // 发送 SitTableReq
         Global.sendRequest(new SitTableReq({
             table_id: this.tableData.id,
