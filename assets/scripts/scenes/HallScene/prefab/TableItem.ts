@@ -1,23 +1,25 @@
 import {_decorator, Component, Label, Node} from 'cc';
 import {Global} from "db://assets/scripts/common/Global";
 import {SitTableReq} from "db://assets/scripts/wire/payload/SitTableReq";
+import {AtlasWireMessage} from "db://assets/scripts/wire/base/Message";
+import {GetTableResp} from "db://assets/scripts/wire/payload/GetTableResp";
+import {SitTableResp} from "db://assets/scripts/wire/payload/SitTableResp";
+import {eventBus} from "db://assets/scripts/common/EventBus";
+import {GetTableReq} from "db://assets/scripts/wire/payload/GetTableReq";
 
 const {ccclass, property} = _decorator;
 
 @ccclass('TableItem')
 export class TableItem extends Component {
-
     @property(Label)
     tableIdLabel: Label | null = null;
-
     @property(Label)
     blindLabel: Label | null = null;
-
     @property([Node])
     seats: Node[] = [];   // 6 个座位节点（拖进来）
-
     /** 当前桌子数据 */
     private tableData: any = null;
+
 
     setData(table: any) {
         this.tableData = table;
@@ -31,6 +33,24 @@ export class TableItem extends Component {
         }
 
         this.refreshSeats();
+
+    }
+
+    onEnable(){
+        this.seats.forEach((seatNode,index) => {
+            seatNode.on(
+                Node.EventType.TOUCH_END,
+                () => this.onClickSeat(index),
+                this
+            );
+        })
+
+    }
+
+    onDisable() {
+        for (const seat of this.seats) {
+            seat.off(Node.EventType.TOUCH_END);
+        }
 
     }
 
@@ -49,22 +69,6 @@ export class TableItem extends Component {
                     label.string = '空位';
                 }
             }
-        }
-    }
-
-    start(){
-        this.seats.forEach((seatNode,index) => {
-            seatNode.on(
-                Node.EventType.TOUCH_END,
-                () => this.onClickSeat(index),
-                this
-            );
-        })
-    }
-
-    onDisable() {
-        for (const seat of this.seats) {
-            seat.off(Node.EventType.TOUCH_END);
         }
     }
 

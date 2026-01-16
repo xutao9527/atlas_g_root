@@ -1,9 +1,11 @@
-import { _decorator, Component, instantiate, Node, Prefab } from 'cc'
+import { _decorator, Component, director, instantiate, Node, Prefab } from 'cc'
 import {GetTableResp} from "db://assets/scripts/wire/payload/GetTableResp"
 import {GetTableReq} from "db://assets/scripts/wire/payload/GetTableReq"
 import {eventBus} from "db://assets/scripts/common/EventBus"
 import {AtlasWireMessage} from "db://assets/scripts/wire/base/Message"
 import {TableItem} from "db://assets/scripts/scenes/HallScene/prefab/TableItem"
+import {SitTableResp} from "db://assets/scripts/wire/payload/SitTableResp";
+import {SitTableReq} from "db://assets/scripts/wire/payload/SitTableReq";
 
 const { ccclass, property } = _decorator
 
@@ -11,7 +13,7 @@ const { ccclass, property } = _decorator
 export class TableList extends Component {
 
     @property(Node)
-    content: Node | null = null   // 指向 ScrollView/view/content
+    content: Node | null = null
 
     @property(Prefab)
     tableItemPrefab: Prefab | null = null
@@ -22,12 +24,27 @@ export class TableList extends Component {
         this.refreshList(msg.payload.tables)
     }
 
+    private sitTableRespHandler = (msg: AtlasWireMessage<SitTableResp>) => {
+        console.log('TableList sitTableRespHandler ', msg);
+        if (msg.payload.ok) {
+            this.scheduleOnce(() => {
+                director.loadScene('HoldemScene', () => {
+                    console.log('HoldemScene 已切换');
+                });
+            }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
+        } else {
+            console.log(`坐下：${msg.payload.message ?? '未知错误'}`);
+        }
+    }
+
     onEnable(){
         eventBus.on(GetTableReq.METHOD, this.getTableHandler)
+        eventBus.on(SitTableReq.METHOD, this.sitTableRespHandler)
     }
 
     onDisable(){
         eventBus.off(GetTableReq.METHOD, this.getTableHandler)
+        eventBus.off(SitTableReq.METHOD, this.sitTableRespHandler)
     }
 
     refreshList(tables: any[]) {
