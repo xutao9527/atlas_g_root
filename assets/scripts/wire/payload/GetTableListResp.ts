@@ -1,16 +1,16 @@
 import {WirePayload} from "db://assets/scripts/wire/base/Message";
 
-export interface GetTableRespProps {
+export interface GetTableListRespProps {
     tables: any[];
 }
 
-export class GetTableResp extends WirePayload{
+export class GetTableListResp extends WirePayload{
     static readonly METHOD = 3 << 16 | 1;
 
     tables: any[];
 
     constructor(
-        props: GetTableRespProps
+        props: GetTableListRespProps
     ) {
         super();
         this.tables = props.tables;

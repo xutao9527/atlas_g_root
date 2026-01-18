@@ -1,6 +1,6 @@
 import { _decorator, Component, director, instantiate, Node, Prefab } from 'cc'
-import {GetTableResp} from "db://assets/scripts/wire/payload/GetTableResp"
-import {GetTableReq} from "db://assets/scripts/wire/payload/GetTableReq"
+import {GetTableListResp} from "db://assets/scripts/wire/payload/GetTableListResp"
+import {GetTableListReq} from "db://assets/scripts/wire/payload/GetTableListReq"
 import {eventBus} from "db://assets/scripts/common/EventBus"
 import {AtlasWireMessage} from "db://assets/scripts/wire/base/Message"
 import {TableItem} from "db://assets/scripts/scenes/HallScene/prefab/TableItem"
@@ -20,7 +20,7 @@ export class TableList extends Component {
     tableItemPrefab: Prefab | null = null
 
 
-    private getTableHandler = (msg: AtlasWireMessage<GetTableResp>) => {
+    private getTableListHandler = (msg: AtlasWireMessage<GetTableListResp>) => {
         // console.log('TableList getTableHandler ', msg)
         this.refreshList(msg.payload.tables)
     }
@@ -30,7 +30,7 @@ export class TableList extends Component {
         if (msg.payload.ok) {
             Global.inst.currentTableId = msg.payload.table_id
             this.scheduleOnce(() => {
-                director.loadScene('HoldemScene', (err,scene) => {
+                director.loadScene('HoldemScene', () => {
                     console.log('HoldemScene 已切换');
                 });
             }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
@@ -40,12 +40,12 @@ export class TableList extends Component {
     }
 
     onEnable(){
-        eventBus.on(GetTableReq.METHOD, this.getTableHandler)
+        eventBus.on(GetTableListReq.METHOD, this.getTableListHandler)
         eventBus.on(SitTableReq.METHOD, this.sitTableRespHandler)
     }
 
     onDisable(){
-        eventBus.off(GetTableReq.METHOD, this.getTableHandler)
+        eventBus.off(GetTableListReq.METHOD, this.getTableListHandler)
         eventBus.off(SitTableReq.METHOD, this.sitTableRespHandler)
     }
 

@@ -1,11 +1,6 @@
 import {_decorator, Component, Label, Node} from 'cc';
 import {Global} from "db://assets/scripts/common/Global";
 import {SitTableReq} from "db://assets/scripts/wire/payload/SitTableReq";
-import {AtlasWireMessage} from "db://assets/scripts/wire/base/Message";
-import {GetTableResp} from "db://assets/scripts/wire/payload/GetTableResp";
-import {SitTableResp} from "db://assets/scripts/wire/payload/SitTableResp";
-import {eventBus} from "db://assets/scripts/common/EventBus";
-import {GetTableReq} from "db://assets/scripts/wire/payload/GetTableReq";
 
 const {ccclass, property} = _decorator;
 
