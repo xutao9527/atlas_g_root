@@ -1,6 +1,6 @@
 import { _decorator ,sys} from 'cc';
-import {AtlasWireMessage, WirePayload} from "db://assets/scripts/wire/base/message";
-import {decodeMessage} from "db://assets/scripts/wire/base/codec";
+import {AtlasWireMessage, WirePayload} from "db://assets/scripts/wire/base/Message";
+import {decodeMessage} from "db://assets/scripts/wire/base/Codec";
 import {eventBus} from "db://assets/scripts/common/EventBus";
 import {TokenAuthReq} from "db://assets/scripts/wire/payload/TokenAuthReq";
 import {AuthResp} from "db://assets/scripts/wire/payload/AuthResp";
@@ -33,7 +33,7 @@ export class Net {
             const uint8Arr = new Uint8Array(arrayBuffer);
 
             let recv_msg= decodeMessage(uint8Arr);
-            console.log('[WS] receive:', recv_msg);
+            //console.log('[WS] receive:', recv_msg);
 
             // ⭐ 分发给全局
             eventBus.emit(recv_msg.header.method, recv_msg);
@@ -52,7 +52,7 @@ export class Net {
     sendRequest<T extends WirePayload>(req: T) {
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
             const rawMsg = req.buildRawMessage();
-            console.log('[WS] send:', req.constructor.name, rawMsg);
+            //console.log('[WS] send:', req.constructor.name, rawMsg);
             this.ws.send(rawMsg);
         } else {
             console.warn('WebSocket not connected');

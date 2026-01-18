@@ -1,22 +1,19 @@
 // @ts-ignore
 import {WirePayload} from "db://assets/scripts/wire/base/Message";
 
-export interface GameActReqProps {
+export interface GameStartReqProps {
     table_id: string;
-    act: any;
 }
 
-export class GameActReq extends WirePayload{
-    static readonly METHOD = 3 << 16 | 5;
+export class GameStartReq extends WirePayload{
+    static readonly METHOD = 3 << 16 | 6;
 
     table_id: string;
-    act: any;
 
     constructor(
-        props: GameActReqProps
+        props: GameStartReqProps
     ) {
         super();
         this.table_id = props.table_id;
-        this.act = props.act;
     }
 }

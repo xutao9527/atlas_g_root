@@ -1,3 +1,4 @@
+// @ts-ignore
 import {WirePayload} from "db://assets/scripts/wire/base/Message";
 
 export interface SitTableRespProps {
@@ -7,7 +8,7 @@ export interface SitTableRespProps {
 }
 
 export class SitTableResp extends WirePayload{
-    static readonly METHOD = 3 << 16 | 2;
+    static readonly METHOD = 3 << 16 | 3;
 
     ok: boolean;
     table_id: string;

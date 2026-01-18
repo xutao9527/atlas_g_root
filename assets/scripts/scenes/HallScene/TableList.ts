@@ -26,12 +26,12 @@ export class TableList extends Component {
     }
 
     private sitTableRespHandler = (msg: AtlasWireMessage<SitTableResp>) => {
-        console.log('TableList sitTableRespHandler ', msg);
+        //console.log('TableList sitTableRespHandler ', msg);
         if (msg.payload.ok) {
             Global.inst.currentTableId = msg.payload.table_id
             this.scheduleOnce(() => {
                 director.loadScene('HoldemScene', () => {
-                    console.log('HoldemScene 已切换');
+                    //console.log('HoldemScene 已切换');
                 });
             }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
         } else {

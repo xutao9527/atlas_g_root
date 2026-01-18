@@ -1,3 +1,4 @@
+// @ts-ignore
 import {WirePayload} from "db://assets/scripts/wire/base/Message";
 
 export interface GameActRespProps {
@@ -6,7 +7,7 @@ export interface GameActRespProps {
 }
 
 export class GameActResp extends WirePayload{
-    static readonly METHOD = 3 << 16 | 4;
+    static readonly METHOD = 3 << 16 | 5;
 
     ok: boolean;
     message: string | null;

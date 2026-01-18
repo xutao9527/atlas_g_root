@@ -1,3 +1,4 @@
+// @ts-ignore
 import {WirePayload} from "db://assets/scripts/wire/base/Message";
 
 export interface LeaveTableReqProps {
@@ -5,7 +6,7 @@ export interface LeaveTableReqProps {
 }
 
 export class LeaveTableReq extends WirePayload{
-    static readonly METHOD = 3 << 16 | 3;
+    static readonly METHOD = 3 << 16 | 4;
 
     table_id: string;
 

@@ -39,7 +39,7 @@ export class AccountMrg extends Component {
     status_node: Node | null = null;   // 挂一个 Label 节点
 
     private registerHandler = (msg: AtlasWireMessage<RegisterResp>) => {
-        console.log('[AccountMrg] 收到注册响应:', msg);
+        //console.log('[AccountMrg] 收到注册响应:', msg);
         if (msg.payload.ok) {
             this.showStatus(`注册成功!`);
 
@@ -49,12 +49,12 @@ export class AccountMrg extends Component {
     }
 
     private basicAuthHandler = (msg: AtlasWireMessage<AuthResp>) => {
-        console.log('[AccountMrg]basicAuthHandler 收到登录响应:', msg);
+        //console.log('[AccountMrg]basicAuthHandler 收到登录响应:', msg);
         if (msg.payload.ok) {
             this.showStatus('登录成功!');
             this.scheduleOnce(() => {
                 director.loadScene('HallScene', () => {
-                    console.log('HallScene 已切换');
+                    //console.log('HallScene 已切换');
                 });
             }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
         } else {
@@ -63,26 +63,26 @@ export class AccountMrg extends Component {
     }
 
     private tokenAuthHandler = (msg: AtlasWireMessage<AuthResp>) =>{
-        console.log('[AccountMrg]tokenAuthHandler 收到登录响应:', msg);
+        //console.log('[AccountMrg]tokenAuthHandler 收到登录响应:', msg);
         if (msg.payload.ok) {
             this.showStatus('登录成功!');
             this.scheduleOnce(() => {
                 director.loadScene('HallScene', () => {
-                    console.log('HallScene 已切换');
+                    //console.log('HallScene 已切换');
                 });
             }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
         }
     }
 
     onEnable() {
-        console.log("AccountMrg onEnable")
+        //console.log("AccountMrg onEnable")
         eventBus.on(RegisterResp.METHOD, this.registerHandler);
         eventBus.on(BasicAuthReq.METHOD, this.basicAuthHandler);
         eventBus.on(TokenAuthReq.METHOD, this.tokenAuthHandler);
     }
 
     onDisable() {
-        console.log("AccountMrg onDisable")
+        //console.log("AccountMrg onDisable")
         eventBus.off(RegisterResp.METHOD, this.registerHandler);
         eventBus.off(BasicAuthReq.METHOD, this.basicAuthHandler);
         eventBus.on(TokenAuthReq.METHOD, this.tokenAuthHandler);

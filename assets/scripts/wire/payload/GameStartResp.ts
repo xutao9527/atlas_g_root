@@ -1,19 +1,19 @@
 // @ts-ignore
 import {WirePayload} from "db://assets/scripts/wire/base/Message";
 
-export interface RegisterRespProps {
+export interface GameStartRespProps {
     ok: boolean;
     message: string | null;
 }
 
-export class RegisterResp extends WirePayload{
-    static readonly METHOD = 1 << 16 | 1;
+export class GameStartResp extends WirePayload{
+    static readonly METHOD = 3 << 16 | 6;
 
     ok: boolean;
     message: string | null;
 
     constructor(
-        props: RegisterRespProps
+        props: GameStartRespProps
     ) {
         super();
         this.ok = props.ok;

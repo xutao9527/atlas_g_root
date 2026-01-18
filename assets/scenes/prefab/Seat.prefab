@@ -35,10 +35,13 @@
     "_components": [
       {
         "__id__": 46
+      },
+      {
+        "__id__": 48
       }
     ],
     "_prefab": {
-      "__id__": 48
+      "__id__": 50
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -207,7 +210,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "seat",
+    "_name": "seat_index",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -556,7 +559,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Label",
+    "_name": "nickname",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -1148,6 +1151,39 @@
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "56iFNcJn9KK4Ve6FsN5Jqi"
+  },
+  {
+    "__type__": "0abcctSXWZK1Y4QsyrRKsxV",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 49
+    },
+    "seat_index": {
+      "__id__": 11
+    },
+    "avatar": {
+      "__id__": 18
+    },
+    "nickname": {
+      "__id__": 24
+    },
+    "card1": {
+      "__id__": 34
+    },
+    "card2": {
+      "__id__": 40
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "eciwZ0KzdHDLZNtRczvicV"
   },
   {
     "__type__": "cc.PrefabInfo",
