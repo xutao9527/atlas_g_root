@@ -22,14 +22,21 @@ export class HoldemMrg extends Component {
 
     private tableId: string = null;
 
+    // index  ===> realIndex
+    private seatIndexMap: Map<number, number> = new Map();
+
     @property([SeatNode])
     seats: SeatNode[] = [];
+
+
 
     @property(CardAssets)
     cardAssets: CardAssets = null;
 
     @property(CommunityCards)
     communityCards: CommunityCards = null;   // 6 个座位节点（拖进来）
+
+
 
     private leaveTableHandler = (msg: AtlasWireMessage<LeaveTableResp>) => {
         //console.log('HoldemMrg leaveTableHandler ', msg)
@@ -49,14 +56,16 @@ export class HoldemMrg extends Component {
             let seatCount = msg.payload.seats.length
             for (let index = 0 ;  index < seatCount ; index++){
                 let realIndex = (index + mySeatIndex) % seatCount
+                this.seatIndexMap.set(index,realIndex)
                 let seat = msg.payload.seats[realIndex];
-                this.seats[index].setSeatIndex(String(realIndex+1))
+                this.seats[index].setSeatIndex(String(realIndex + 1))
                 if(seat){
                     this.seats[index].setActive(true)
                     this.seats[index].setNickName(seat.nickname)
                 }
             }
         }
+
         for (const [index, card] of msg.payload.hand_cards.entries()) {
             if (!card) continue;
             let cardFrame = this.cardAssets.getCardFrame(card.suit, card.value);
@@ -68,6 +77,8 @@ export class HoldemMrg extends Component {
             let cardFrame = this.cardAssets.getCardFrame(card.suit, card.value);
             this.communityCards.setCard(cardFrame,index)
         }
+        console.log('HoldemMrg getTableInfoHandler seatIndexMap', this.seatIndexMap)
+        console.log()
     }
 
     private GameStartHandler = (_msg: AtlasWireMessage<GameStartResp>) => {
