@@ -7,9 +7,11 @@ import {LeaveTableResp} from "db://assets/scripts/wire/payload/LeaveTableResp";
 import {AtlasWireKind} from "db://assets/scripts/wire/base/Header";
 import {GetTableInfoResp} from "db://assets/scripts/wire/payload/GetTableInfoResp";
 import {GetTableInfoReq} from "db://assets/scripts/wire/payload/GetTableInfoReq";
-import {SeatView} from "db://assets/scripts/scenes/HallScene/prefab/SeatView";
+import {SeatView} from "db://assets/scripts/scenes/HoldemScene/prefab/SeatView";
 import {GameStartResp} from "db://assets/scripts/wire/payload/GameStartResp";
 import {GameStartReq} from "db://assets/scripts/wire/payload/GameStartReq";
+import {CardAssets} from "db://assets/scripts/card/CardAssets";
+import {CommunityCards} from "db://assets/scripts/scenes/HoldemScene/prefab/CommunityCards";
 const { ccclass, property } = _decorator;
 
 @ccclass('HoldemMrg')
@@ -19,6 +21,12 @@ export class HoldemMrg extends Component {
 
     @property([SeatView])
     seats: SeatView[] = [];   // 6 个座位节点（拖进来）
+
+    @property(CardAssets)
+    cardAssets: CardAssets = null;
+
+    @property(CommunityCards)
+    communityCards: CommunityCards = null;   // 6 个座位节点（拖进来）
 
     private leaveTableHandler = (msg: AtlasWireMessage<LeaveTableResp>) => {
         //console.log('HoldemMrg leaveTableHandler ', msg)
@@ -45,6 +53,21 @@ export class HoldemMrg extends Component {
                     this.seats[index].setNickName(seat.nickname)
                 }
             }
+        }
+        for (const [index, card] of msg.payload.hand_cards.entries()) {
+            if (!card) continue;
+            let cardFrame = this.cardAssets.getCardFrame(card.suit, card.value);
+            if (index === 0) {
+                this.seats[0].setCard1(cardFrame);
+            } else if (index === 1) {
+                this.seats[0].setCard2(cardFrame);
+            }
+        }
+
+        for (const [index, card] of msg.payload.community_cards.entries()) {
+            if (!card) continue;
+            let cardFrame = this.cardAssets.getCardFrame(card.suit, card.value);
+            this.communityCards.setCard(cardFrame,index)
         }
     }
 

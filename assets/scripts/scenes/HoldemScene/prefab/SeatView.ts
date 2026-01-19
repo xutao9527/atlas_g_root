@@ -30,6 +30,7 @@ export class SeatView extends Component {
     }
 
     setCard1(frame: SpriteFrame | null) {
+        console.log("333",frame)
         if (!frame) {
             this.card1.node.active = false;
             return;
