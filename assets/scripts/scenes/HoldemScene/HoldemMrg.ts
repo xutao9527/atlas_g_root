@@ -28,15 +28,11 @@ export class HoldemMrg extends Component {
     @property([SeatNode])
     seats: SeatNode[] = [];
 
-
-
     @property(CardAssets)
     cardAssets: CardAssets = null;
 
     @property(CommunityCards)
     communityCards: CommunityCards = null;   // 6 个座位节点（拖进来）
-
-
 
     private leaveTableHandler = (msg: AtlasWireMessage<LeaveTableResp>) => {
         //console.log('HoldemMrg leaveTableHandler ', msg)
