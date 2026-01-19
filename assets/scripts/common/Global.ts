@@ -14,7 +14,7 @@ export class Global extends Component {
     currentTableId: string | null
 
     protected onLoad(): void {
-        if (Global.inst) {
+        if (Global.inst && Global.inst !== this) {
             this.node.destroy();
             return;
         }
@@ -30,7 +30,7 @@ export class Global extends Component {
     }
 
     static sendRequest<T extends WirePayload>(req: T) {
-        this.inst.net.sendRequest(req);
+        Global.inst.net.sendRequest(req);
     }
 }
 

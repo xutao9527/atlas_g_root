@@ -49,6 +49,11 @@ export class Net {
         };
     }
 
+    close() {
+        this.ws?.close();
+        this.ws = null;
+    }
+
     sendRequest<T extends WirePayload>(req: T) {
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
             const rawMsg = req.buildRawMessage();
@@ -70,7 +75,7 @@ export class Net {
             console.log('[WS] no token, skip token auth');
             return;
         }
-        //console.log('[WS] try token auth');
+        console.log('[WS] try token auth');
         const req = new TokenAuthReq({ token });
         this.sendRequest(req);
     }
@@ -82,15 +87,11 @@ export class Net {
             return;
         }
         if (msg.payload.token) {
-            //console.log('[WS] update token');
+            console.log('[WS] update token');
             sys.localStorage.setItem('token', msg.payload.token);
         }
     }
 
-    close() {
-        this.ws?.close();
-        this.ws = null;
-    }
 }
 
 
