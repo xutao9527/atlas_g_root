@@ -8,8 +8,7 @@ export class CommunityCards extends Component {
     cards: Sprite[] = [];
 
     setCard(frame: SpriteFrame | null,index:number) {
-        if (!frame && index < 5 && index >= 0) {
-
+        if (!frame) {
             return;
         }
         this.cards[index].spriteFrame = frame;

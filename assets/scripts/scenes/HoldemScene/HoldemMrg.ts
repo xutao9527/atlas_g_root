@@ -40,7 +40,7 @@ export class HoldemMrg extends Component {
     }
 
     private getTableInfoHandler = (msg: AtlasWireMessage<GetTableInfoResp>) => {
-        console.log('HoldemMrg getTableInfoHandler ', msg)
+
         if (msg.header.kind == AtlasWireKind.ResponseOk) {
             let mySeatIndex = msg.payload.seat_index
             let seatCount = msg.payload.seats.length
@@ -50,6 +50,7 @@ export class HoldemMrg extends Component {
                 let seat = msg.payload.seats[realIndex];
                 this.seats[index].setSeatIndex(String(realIndex+1))
                 if(seat){
+                    this.seats[index].setActive(true)
                     this.seats[index].setNickName(seat.nickname)
                 }
             }
@@ -57,11 +58,7 @@ export class HoldemMrg extends Component {
         for (const [index, card] of msg.payload.hand_cards.entries()) {
             if (!card) continue;
             let cardFrame = this.cardAssets.getCardFrame(card.suit, card.value);
-            if (index === 0) {
-                this.seats[0].setCard1(cardFrame);
-            } else if (index === 1) {
-                this.seats[0].setCard2(cardFrame);
-            }
+            this.seats[0].setCard(cardFrame,index);
         }
 
         for (const [index, card] of msg.payload.community_cards.entries()) {

@@ -1,4 +1,4 @@
-import {_decorator, Component, Label, Sprite, SpriteFrame} from 'cc';
+import {_decorator, Component, Label, Sprite, SpriteFrame, UITransform} from 'cc';
 
 const {ccclass, property} = _decorator;
 
@@ -20,23 +20,45 @@ export class SeatView extends Component {
     @property(Sprite)
     card2: Sprite = null;
 
+
+    setActive(active:boolean){
+        this.seat_index.node.active = active;
+        this.avatar.node.active = active;
+        this.nickname.node.active = active;
+        this.card1.node.active = active;
+        this.card2.node.active = active;
+    }
+
     setSeatIndex(index: string) {
         this.seat_index.string = index;
     }
 
     setNickName(nickname:string){
-        this.nickname.node.active = true;
+
         this.nickname.string = nickname
     }
 
+    setCard(frame: SpriteFrame | null,index:number) {
+        if (!frame) {
+            return;
+        }
+        if (index === 0){
+            this.card1.spriteFrame = frame;
+            this.card1.node.getComponent(UITransform)!.setContentSize(77, 91);
+        }
+        if (index === 1){
+            this.card2.spriteFrame = frame;
+            this.card2.node.getComponent(UITransform)!.setContentSize(77, 91);
+        }
+    }
+
     setCard1(frame: SpriteFrame | null) {
-        console.log("333",frame)
         if (!frame) {
             this.card1.node.active = false;
             return;
         }
         this.card1.spriteFrame = frame;
-        this.card1.node.active = true;
+
     }
 
     setCard2(frame: SpriteFrame | null) {
@@ -45,7 +67,6 @@ export class SeatView extends Component {
             return;
         }
         this.card2.spriteFrame = frame;
-        this.card2.node.active = true;
     }
 }
 

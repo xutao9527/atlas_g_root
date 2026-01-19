@@ -9,8 +9,6 @@ const { ccclass } = _decorator;
 @ccclass('HallMrg')
 export class HallMrg extends Component {
 
-
-
     private getTableListHandler = (_msg: AtlasWireMessage<GetTableListResp>) => {
         //console.log('HallMrg getTableHandler ', msg);
     }
