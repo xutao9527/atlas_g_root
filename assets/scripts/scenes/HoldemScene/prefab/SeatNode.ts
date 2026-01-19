@@ -1,5 +1,6 @@
-import {_decorator, Component, Node, Sprite, Label, Vec3, SpriteFrame, UITransform} from 'cc';
-const { ccclass, property } = _decorator;
+import {_decorator, Component, Node, Sprite, Label, Vec3, SpriteFrame, UITransform, Color} from 'cc';
+
+const {ccclass, property} = _decorator;
 
 @ccclass('SeatNode')
 export class SeatNode extends Component {
@@ -9,9 +10,9 @@ export class SeatNode extends Component {
     stateRoot: Node = null;
     // ------------------  state  ------------------
     @property(Label)
-    zhuang:Label = null;
+    zhuang: Label = null;
     @property(Label)
-    bet:Label = null;
+    bet: Label = null;
     // ==================  info  ==================
     @property(Node)
     infoRoot: Node = null;
@@ -19,7 +20,7 @@ export class SeatNode extends Component {
     @property(Node)
     playerRoot: Node = null;
     @property(Label)
-    seatIndex:Label = null;
+    seatIndex: Label = null;
     @property(Node)
     playerInfo: Node = null;
     @property(Sprite)
@@ -35,19 +36,35 @@ export class SeatNode extends Component {
     card2: Sprite = null;
 
 
-    setActive(active:boolean){
-        if(!active){
+    setActive(active: boolean) {
+        if (!active) {
             this.zhuang.node.active = active;
             this.bet.node.active = active;
         }
 
         //this.seatIndex.node.active = active;
         //this.avatar.node.active = active;
-
         this.nickname.node.active = active;
 
         this.card1.node.active = active;
         this.card2.node.active = active;
+    }
+
+    setZhang(active: boolean) {
+        this.zhuang.node.active = active;
+    }
+
+    setCurrentTurn(active: boolean) {
+        this.seatIndex.color = new Color(255, 0, 0, 255); // 红色
+    }
+
+    setBet(current_bet: number) {
+        if (current_bet > 0) {
+            this.bet.string = String(current_bet)
+            this.bet.node.active = true
+        } else {
+            this.bet.node.active = false
+        }
     }
 
     setDirection(dir: SeatDirection) {
@@ -75,25 +92,26 @@ export class SeatNode extends Component {
         this.seatIndex.string = index;
     }
 
-    setNickName(nickname:string){
+    setNickName(nickname: string) {
         this.nickname.string = nickname
     }
 
-    setCard(frame: SpriteFrame | null,index:number) {
+    setCard(frame: SpriteFrame | null, index: number) {
         if (!frame) {
             return;
         }
-        if (index === 0){
+        if (index === 0) {
             this.card1.spriteFrame = frame;
             this.card1.node.getComponent(UITransform)!.setContentSize(77, 91);
         }
-        if (index === 1){
+        if (index === 1) {
             this.card2.spriteFrame = frame;
             this.card2.node.getComponent(UITransform)!.setContentSize(77, 91);
         }
     }
-}
 
+
+}
 
 export enum SeatDirection {
     Down,

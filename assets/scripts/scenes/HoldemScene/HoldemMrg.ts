@@ -61,6 +61,7 @@ export class HoldemMrg extends Component {
                 this.seats[index].setSeatIndex(String(realIndex + 1))
                 if(seat){
                     this.seats[index].setActive(true)
+                    this.seats[index].setBet(seat.street_bet)
                     this.seats[index].setNickName(seat.nickname)
                 }
             }
@@ -77,6 +78,12 @@ export class HoldemMrg extends Component {
             let cardFrame = this.cardAssets.getCardFrame(card.suit, card.value);
             this.communityCards.setCard(cardFrame,index)
         }
+
+        let current_turn = this.seatIndexMap.get(msg.payload.current_turn)
+        this.seats[current_turn].setCurrentTurn(true)
+        let dealer_pos = this.seatIndexMap.get(msg.payload.dealer_pos)
+        this.seats[dealer_pos].setZhang(true)
+
         console.log('HoldemMrg getTableInfoHandler seatIndexMap', this.seatIndexMap)
         console.log()
     }
