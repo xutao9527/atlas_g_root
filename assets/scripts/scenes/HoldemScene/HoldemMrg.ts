@@ -12,6 +12,8 @@ import {GameStartResp} from "db://assets/scripts/wire/payload/GameStartResp";
 import {GameStartReq} from "db://assets/scripts/wire/payload/GameStartReq";
 import {CardAssets} from "db://assets/scripts/card/CardAssets";
 import {CommunityCards} from "db://assets/scripts/scenes/HoldemScene/prefab/CommunityCards";
+import {GameActReq} from "db://assets/scripts/wire/payload/GameActReq";
+import {GameActResp} from "db://assets/scripts/wire/payload/GameActResp";
 const { ccclass, property } = _decorator;
 
 @ccclass('HoldemMrg')
@@ -76,12 +78,14 @@ export class HoldemMrg extends Component {
         eventBus.on(LeaveTableReq.METHOD,this.leaveTableHandler)
         eventBus.on(GetTableInfoReq.METHOD,this.getTableInfoHandler)
         eventBus.on(GameStartReq.METHOD,this.GameStartHandler)
+        eventBus.on(GameActReq.METHOD,this.GameActHandler)
     }
 
     onDisable(){
         eventBus.off(LeaveTableReq.METHOD,this.leaveTableHandler)
         eventBus.off(GetTableInfoReq.METHOD,this.getTableInfoHandler)
-        eventBus.on(GameStartReq.METHOD,this.GameStartHandler)
+        eventBus.off(GameStartReq.METHOD,this.GameStartHandler)
+        eventBus.off(GameActReq.METHOD,this.GameActHandler)
     }
 
     start() {
@@ -108,6 +112,29 @@ export class HoldemMrg extends Component {
     onGameStartBtn(){
         let gameStartReq = new GameStartReq({table_id: this.tableId});
         Global.sendRequest(gameStartReq)
+    }
+
+    private GameActHandler = (_msg: AtlasWireMessage<GameActResp>) => {
+        console.log('HoldemMrg GameActHandler ', _msg)
+    }
+
+    onAction(event: Event, action: string) {
+        console.log('action =', action);
+        let gameActReq: GameActReq | null = null;
+        switch (action) {
+            case 'fold':
+                gameActReq = new GameActReq({act: {kind: 'Fold'}, table_id: this.tableId});
+                break;
+            case 'call':
+                gameActReq = new GameActReq({act: "Call", table_id: this.tableId});
+                break;
+            case 'check':
+                gameActReq = new GameActReq({act: {kind: 'Check'}, table_id: this.tableId});
+                break;
+        }
+        if (gameActReq) {
+            Global.sendRequest(gameActReq);
+        }
     }
 }
 
