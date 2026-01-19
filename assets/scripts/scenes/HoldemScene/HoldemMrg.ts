@@ -1,4 +1,4 @@
-import { _decorator, Component, director } from 'cc';
+import {_decorator, Component, director} from 'cc';
 import {Global} from "db://assets/scripts/common/Global";
 import {LeaveTableReq} from "db://assets/scripts/wire/payload/LeaveTableReq";
 import {eventBus} from "db://assets/scripts/common/EventBus";
@@ -7,13 +7,14 @@ import {LeaveTableResp} from "db://assets/scripts/wire/payload/LeaveTableResp";
 import {AtlasWireKind} from "db://assets/scripts/wire/base/Header";
 import {GetTableInfoResp} from "db://assets/scripts/wire/payload/GetTableInfoResp";
 import {GetTableInfoReq} from "db://assets/scripts/wire/payload/GetTableInfoReq";
-import {SeatView} from "db://assets/scripts/scenes/HoldemScene/prefab/SeatView";
 import {GameStartResp} from "db://assets/scripts/wire/payload/GameStartResp";
 import {GameStartReq} from "db://assets/scripts/wire/payload/GameStartReq";
 import {CardAssets} from "db://assets/scripts/card/CardAssets";
 import {CommunityCards} from "db://assets/scripts/scenes/HoldemScene/prefab/CommunityCards";
 import {GameActReq} from "db://assets/scripts/wire/payload/GameActReq";
 import {GameActResp} from "db://assets/scripts/wire/payload/GameActResp";
+import {SeatDirection, SeatNode} from "db://assets/scripts/scenes/HoldemScene/prefab/SeatNode";
+
 const { ccclass, property } = _decorator;
 
 @ccclass('HoldemMrg')
@@ -21,8 +22,8 @@ export class HoldemMrg extends Component {
 
     private tableId: string = null;
 
-    @property([SeatView])
-    seats: SeatView[] = [];   // 6 个座位节点（拖进来）
+    @property([SeatNode])
+    seats: SeatNode[] = [];
 
     @property(CardAssets)
     cardAssets: CardAssets = null;
@@ -42,11 +43,10 @@ export class HoldemMrg extends Component {
     }
 
     private getTableInfoHandler = (msg: AtlasWireMessage<GetTableInfoResp>) => {
-
+        console.log('HoldemMrg getTableInfoHandler ', msg)
         if (msg.header.kind == AtlasWireKind.ResponseOk) {
             let mySeatIndex = msg.payload.seat_index
             let seatCount = msg.payload.seats.length
-
             for (let index = 0 ;  index < seatCount ; index++){
                 let realIndex = (index + mySeatIndex) % seatCount
                 let seat = msg.payload.seats[realIndex];
@@ -89,8 +89,19 @@ export class HoldemMrg extends Component {
     }
 
     start() {
+        this.seats[0].setDirection(SeatDirection.Down)
+        this.seats[1].setDirection(SeatDirection.Right)
+        this.seats[2].setDirection(SeatDirection.Up)
+        this.seats[3].setDirection(SeatDirection.Up)
+        this.seats[4].setDirection(SeatDirection.Left)
+        this.seats[5].setDirection(SeatDirection.Down)
+        for (let seat of this.seats) {
+            seat.setActive(false)
+        }
         this.tableId = Global.inst.currentTableId;
-        //console.log('进入牌桌：', this.tableId);
+        if (!this.tableId){
+            this.tableId = "01KF92WC3SCN0YZZK625K7AFDS"
+        }
     }
 
     onGetTableInfoBtn(){
