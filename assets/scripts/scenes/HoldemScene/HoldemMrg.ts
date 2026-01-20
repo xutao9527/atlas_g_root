@@ -22,7 +22,7 @@ export class HoldemMrg extends Component {
 
     private tableId: string = null;
 
-    // index  ===> realIndex
+    // net_Index ===> real_index
     private seatIndexMap: Map<number, number> = new Map();
 
     @property([SeatNode])
@@ -50,12 +50,15 @@ export class HoldemMrg extends Component {
         if (msg.header.kind == AtlasWireKind.ResponseOk) {
             let mySeatIndex = msg.payload.seat_index
             let seatCount = msg.payload.seats.length
-            for (let index = 0 ;  index < seatCount ; index++){
+            for (let index = 0; index < seatCount; index++) {
                 let realIndex = (index + mySeatIndex) % seatCount
-                this.seatIndexMap.set(index,realIndex)
-                let seat = msg.payload.seats[realIndex];
+                this.seatIndexMap.set(realIndex, index)
+
                 this.seats[index].setSeatIndex(String(realIndex + 1))
-                if(seat){
+                this.seats[index].setCurrentTurn(false)
+
+                let seat = msg.payload.seats[realIndex];
+                if (seat) {
                     this.seats[index].setActive(true)
                     this.seats[index].setBet(seat.street_bet)
                     this.seats[index].setNickName(seat.nickname)
@@ -75,13 +78,17 @@ export class HoldemMrg extends Component {
             this.communityCards.setCard(cardFrame,index)
         }
 
+        console.log("1111111111",msg.payload.current_turn)
         let current_turn = this.seatIndexMap.get(msg.payload.current_turn)
+        console.log("2222222222",msg.payload.current_turn,current_turn)
+
+
         this.seats[current_turn].setCurrentTurn(true)
         let dealer_pos = this.seatIndexMap.get(msg.payload.dealer_pos)
         this.seats[dealer_pos].setZhang(true)
 
         console.log('HoldemMrg getTableInfoHandler seatIndexMap', this.seatIndexMap)
-        console.log()
+
     }
 
     private GameStartHandler = (_msg: AtlasWireMessage<GameStartResp>) => {
@@ -114,7 +121,7 @@ export class HoldemMrg extends Component {
         }
         this.tableId = Global.inst.currentTableId;
         if (!this.tableId){
-            this.tableId = "01KF92WC3SCN0YZZK625K7AFDS"
+            this.tableId = "01KFCS2VBG3N2K1KK1GYC3VWN7"
         }
     }
 
@@ -154,7 +161,7 @@ export class HoldemMrg extends Component {
                 gameActReq = new GameActReq({act: "Call", table_id: this.tableId});
                 break;
             case 'check':
-                gameActReq = new GameActReq({act: {kind: 'Check'}, table_id: this.tableId});
+                gameActReq = new GameActReq({act: 'Check', table_id: this.tableId});
                 break;
         }
         if (gameActReq) {

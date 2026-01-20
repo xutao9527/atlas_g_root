@@ -55,7 +55,11 @@ export class SeatNode extends Component {
     }
 
     setCurrentTurn(active: boolean) {
-        this.seatIndex.color = new Color(255, 0, 0, 255); // 红色
+        if (active) {
+            this.seatIndex.color = new Color(255, 215, 0, 255);
+        } else {
+            this.seatIndex.color = new Color(221, 230, 237, 255);
+        }
     }
 
     setBet(current_bet: number) {
