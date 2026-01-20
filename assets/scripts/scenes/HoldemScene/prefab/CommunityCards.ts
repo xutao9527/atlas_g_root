@@ -9,10 +9,12 @@ export class CommunityCards extends Component {
 
     setCard(frame: SpriteFrame | null,index:number) {
         if (!frame) {
-            return;
+            this.cards[index].node.active = false;
+        }else{
+            this.cards[index].spriteFrame = frame;
+            this.cards[index].node.active = true;
         }
-        this.cards[index].spriteFrame = frame;
-        this.cards[index].node.active = true;
+
     }
 }
 

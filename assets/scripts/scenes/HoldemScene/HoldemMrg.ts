@@ -46,14 +46,14 @@ export class HoldemMrg extends Component {
     }
 
     private getTableInfoHandler = (msg: AtlasWireMessage<GetTableInfoResp>) => {
-        console.log('HoldemMrg getTableInfoHandler ', msg)
+        console.log('HoldemMrg getTableInfoHandler ', msg.payload)
         if (msg.header.kind == AtlasWireKind.ResponseOk) {
             let mySeatIndex = msg.payload.seat_index
             let seatCount = msg.payload.seats.length
+            // 遍历位置,设置座位信息
             for (let index = 0; index < seatCount; index++) {
                 let realIndex = (index + mySeatIndex) % seatCount
                 this.seatIndexMap.set(realIndex, index)
-
                 this.seats[index].setSeatIndex(String(realIndex + 1))
                 this.seats[index].setCurrentTurn(false)
 
@@ -65,27 +65,33 @@ export class HoldemMrg extends Component {
                     this.seats[index].setBalance(seat.balance)
                 }
             }
+            // 设置手牌
+            for (const [index, card] of msg.payload.hand_cards.entries()) {
+                if (!card) {
+                    this.seats[0].setCard(null, index);
+                }else{
+                    let cardFrame = this.cardAssets.getCardFrame(card.suit, card.value);
+                    this.seats[0].setCard(cardFrame, index);
+                }
+
+            }
+            // 设置公牌
+            for (const [index, card] of msg.payload.community_cards.entries()) {
+                if (!card) {
+                    this.communityCards.setCard(null, index)
+                } else {
+                    let cardFrame = this.cardAssets.getCardFrame(card.suit, card.value);
+                    this.communityCards.setCard(cardFrame, index)
+                }
+
+            }
+
+            // 设置位置标记,行动者,庄位
+            let current_turn = this.seatIndexMap.get(msg.payload.current_turn)
+            this.seats[current_turn].setCurrentTurn(true)
+            let dealer_pos = this.seatIndexMap.get(msg.payload.dealer_pos)
+            this.seats[dealer_pos].setZhang(true)
         }
-
-        for (const [index, card] of msg.payload.hand_cards.entries()) {
-            if (!card) continue;
-            let cardFrame = this.cardAssets.getCardFrame(card.suit, card.value);
-            this.seats[0].setCard(cardFrame,index);
-        }
-
-        for (const [index, card] of msg.payload.community_cards.entries()) {
-            if (!card) continue;
-            let cardFrame = this.cardAssets.getCardFrame(card.suit, card.value);
-            this.communityCards.setCard(cardFrame,index)
-        }
-
-
-        let current_turn = this.seatIndexMap.get(msg.payload.current_turn)
-        this.seats[current_turn].setCurrentTurn(true)
-        let dealer_pos = this.seatIndexMap.get(msg.payload.dealer_pos)
-        this.seats[dealer_pos].setZhang(true)
-
-        //console.log('HoldemMrg getTableInfoHandler seatIndexMap', this.seatIndexMap)
 
     }
 
