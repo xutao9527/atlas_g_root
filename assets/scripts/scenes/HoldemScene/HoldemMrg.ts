@@ -60,8 +60,9 @@ export class HoldemMrg extends Component {
                 let seat = msg.payload.seats[realIndex];
                 if (seat) {
                     this.seats[index].setActive(true)
-                    this.seats[index].setBet(seat.street_bet)
+                    this.seats[index].setActed(seat.acted_view)
                     this.seats[index].setNickName(seat.nickname)
+                    this.seats[index].setBalance(seat.balance)
                 }
             }
         }
@@ -78,11 +79,8 @@ export class HoldemMrg extends Component {
             this.communityCards.setCard(cardFrame,index)
         }
 
-        console.log("1111111111",msg.payload.current_turn)
+
         let current_turn = this.seatIndexMap.get(msg.payload.current_turn)
-        console.log("2222222222",msg.payload.current_turn,current_turn)
-
-
         this.seats[current_turn].setCurrentTurn(true)
         let dealer_pos = this.seatIndexMap.get(msg.payload.dealer_pos)
         this.seats[dealer_pos].setZhang(true)
@@ -121,7 +119,7 @@ export class HoldemMrg extends Component {
         }
         this.tableId = Global.inst.currentTableId;
         if (!this.tableId){
-            this.tableId = "01KFCS2VBG3N2K1KK1GYC3VWN7"
+            this.tableId = "01KFDC62KYJT0YGFV04TWHD96V"
         }
     }
 
@@ -155,10 +153,10 @@ export class HoldemMrg extends Component {
         let gameActReq: GameActReq | null = null;
         switch (action) {
             case 'fold':
-                gameActReq = new GameActReq({act: {kind: 'Fold'}, table_id: this.tableId});
+                gameActReq = new GameActReq({act: 'Fold', table_id: this.tableId});
                 break;
             case 'call':
-                gameActReq = new GameActReq({act: "Call", table_id: this.tableId});
+                gameActReq = new GameActReq({act: 'Call', table_id: this.tableId});
                 break;
             case 'check':
                 gameActReq = new GameActReq({act: 'Check', table_id: this.tableId});
