@@ -98,11 +98,13 @@ export class SeatNode extends Component {
         }
         if (index === 0) {
             this.card1.spriteFrame = frame;
-            this.card1.node.getComponent(UITransform)!.setContentSize(77, 91);
+            this.card1.node.active = true
+            // this.card1.node.getComponent(UITransform)!.setContentSize(77, 91);
         }
         if (index === 1) {
             this.card2.spriteFrame = frame;
-            this.card2.node.getComponent(UITransform)!.setContentSize(77, 91);
+            this.card2.node.active = true
+            // this.card2.node.getComponent(UITransform)!.setContentSize(77, 91);
         }
     }
 

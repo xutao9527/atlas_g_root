@@ -85,7 +85,7 @@ export class HoldemMrg extends Component {
         let dealer_pos = this.seatIndexMap.get(msg.payload.dealer_pos)
         this.seats[dealer_pos].setZhang(true)
 
-        console.log('HoldemMrg getTableInfoHandler seatIndexMap', this.seatIndexMap)
+        //console.log('HoldemMrg getTableInfoHandler seatIndexMap', this.seatIndexMap)
 
     }
 
@@ -119,8 +119,9 @@ export class HoldemMrg extends Component {
         }
         this.tableId = Global.inst.currentTableId;
         if (!this.tableId){
-            this.tableId = "01KFDC62KYJT0YGFV04TWHD96V"
+            this.tableId = "01KFDCXW9XSWMY9NP46RQ8FPPD"
         }
+        this.onGetTableInfoBtn()
     }
 
     onGetTableInfoBtn(){
@@ -144,8 +145,11 @@ export class HoldemMrg extends Component {
         Global.sendRequest(gameStartReq)
     }
 
-    private GameActHandler = (_msg: AtlasWireMessage<GameActResp>) => {
-        console.log('HoldemMrg GameActHandler ', _msg)
+    private GameActHandler = (msg: AtlasWireMessage<GameActResp>) => {
+        console.log('HoldemMrg GameActHandler ', msg)
+        if (msg.header.kind == AtlasWireKind.ResponseOk) {
+            this.onGetTableInfoBtn()
+        }
     }
 
     onAction(event: Event, action: string) {
