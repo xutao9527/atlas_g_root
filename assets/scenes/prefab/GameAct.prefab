@@ -91,7 +91,7 @@
         "__id__": 3
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 9
@@ -492,7 +492,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 60,
+      "x": -25,
       "y": 0,
       "z": 0
     },
@@ -876,7 +876,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -25,
+      "x": -110,
       "y": 0,
       "z": 0
     },
@@ -1243,7 +1243,7 @@
         "__id__": 48
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 54
@@ -1627,7 +1627,7 @@
         "__id__": 63
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 69
@@ -2076,6 +2076,11 @@
     "__prefab": {
       "__id__": 82
     },
+    "fold": null,
+    "check": null,
+    "call": null,
+    "bet": null,
+    "raise": null,
     "_id": ""
   },
   {

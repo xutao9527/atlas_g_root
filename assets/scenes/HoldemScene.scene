@@ -57,7 +57,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 154
+      "__id__": 156
     },
     "_id": "3e64d2c2-9cc8-4629-a09a-8aed1667ccf5"
   },
@@ -256,7 +256,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 469.52595936794586,
+    "_orthoHeight": 369.84198645598195,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -3532,6 +3532,7 @@
     },
     "cardAssets": null,
     "communityCards": null,
+    "gameAct": null,
     "_id": "5bNCUWmj5Ai5V1tHf9hzjj"
   },
   {
@@ -3564,6 +3565,9 @@
       },
       {
         "__id__": 152
+      },
+      {
+        "__id__": 154
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -3779,30 +3783,52 @@
     ]
   },
   {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 136
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "gameAct"
+    ],
+    "target": {
+      "__id__": 105
+    },
+    "targetInfo": {
+      "__id__": 155
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "edwA+5IG9HD6aHn0638MLs"
+    ]
+  },
+  {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 155
-    },
-    "shadows": {
-      "__id__": 156
-    },
-    "_skybox": {
       "__id__": 157
     },
-    "fog": {
+    "shadows": {
       "__id__": 158
     },
-    "octree": {
+    "_skybox": {
       "__id__": 159
     },
-    "skin": {
+    "fog": {
       "__id__": 160
     },
-    "lightProbeInfo": {
+    "octree": {
       "__id__": 161
     },
-    "postSettings": {
+    "skin": {
       "__id__": 162
+    },
+    "lightProbeInfo": {
+      "__id__": 163
+    },
+    "postSettings": {
+      "__id__": 164
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

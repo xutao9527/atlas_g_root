@@ -14,6 +14,7 @@ import {CommunityCards} from "db://assets/scripts/scenes/HoldemScene/prefab/Comm
 import {GameActReq} from "db://assets/scripts/wire/payload/GameActReq";
 import {GameActResp} from "db://assets/scripts/wire/payload/GameActResp";
 import {SeatDirection, SeatNode} from "db://assets/scripts/scenes/HoldemScene/prefab/SeatNode";
+import {GameAct} from "db://assets/scripts/scenes/HoldemScene/prefab/GameAct";
 
 const { ccclass, property } = _decorator;
 
@@ -43,6 +44,9 @@ export class HoldemMrg extends Component {
     @property(CommunityCards)
     communityCards: CommunityCards = null;
 
+    @property(GameAct)
+    gameAct: GameAct = null;
+
     private leaveTableHandler = (msg: AtlasWireMessage<LeaveTableResp>) => {
         //console.log('HoldemMrg leaveTableHandler ', msg)
         if(msg.header.kind == AtlasWireKind.ResponseOk &&  msg.payload.ok){
@@ -55,7 +59,7 @@ export class HoldemMrg extends Component {
     }
 
     private getTableInfoHandler = (msg: AtlasWireMessage<GetTableInfoResp>) => {
-        console.log('HoldemMrg getTableInfoHandler ', msg.payload)
+        //console.log('HoldemMrg getTableInfoHandler ', msg.payload)
         if (msg.header.kind == AtlasWireKind.ResponseOk) {
             let mySeatIndex = msg.payload.seat_index
             let seatCount = msg.payload.seats.length
@@ -148,6 +152,7 @@ export class HoldemMrg extends Component {
         if (!this.tableId){
             this.tableId = "01KFFW8TSEM4BA579WX4PZBKN8"
         }
+        this.gameAct.setTableId(this.tableId)
         this.onGetTableInfoBtn()
     }
 

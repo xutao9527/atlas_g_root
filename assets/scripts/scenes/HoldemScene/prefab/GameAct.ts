@@ -16,7 +16,11 @@ export class GameAct extends Component {
     @property(Node)
     raise: Node = null;
 
+    private tableId: string = null;
 
+    setTableId(tableId: string) {
+        this.tableId = tableId
+    }
 }
 
 
