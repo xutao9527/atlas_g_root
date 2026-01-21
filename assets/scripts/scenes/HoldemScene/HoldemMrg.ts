@@ -63,7 +63,7 @@ export class HoldemMrg extends Component {
     }
 
     private getTableInfoHandler = (msg: AtlasWireMessage<GetTableInfoResp>) => {
-        console.log('HoldemMrg getTableInfoHandler ', msg.payload)
+        //console.log('HoldemMrg getTableInfoHandler ', msg.payload)
         if (msg.header.kind == AtlasWireKind.ResponseOk) {
             let mySeatIndex = msg.payload.seat_index
             let seatCount = msg.payload.seats.length
@@ -94,7 +94,6 @@ export class HoldemMrg extends Component {
                     let cardFrame = this.cardAssets.getCardFrame(card.suit, card.value);
                     this.seats[0].setCard(cardFrame, index);
                 }
-
             }
             // 设置公牌
             for (const [index, card] of msg.payload.community_cards.entries()) {
@@ -114,7 +113,11 @@ export class HoldemMrg extends Component {
             this.seats[dealer_pos].setZhang(true)
 
             // 设置行动者按钮
-            this.gameAct.setActive(msg.payload.current_turn == msg.payload.seat_index, msg.payload.current_turn_act)
+            this.gameAct.setState(
+                msg.payload.current_turn == msg.payload.seat_index,
+                msg.payload.seats[mySeatIndex],
+                msg.payload,
+            )
 
             // 设置状态信息
             this.gameState.string = msg.payload.state
@@ -159,7 +162,7 @@ export class HoldemMrg extends Component {
         }
         this.tableId = Global.inst.currentTableId;
         if (!this.tableId){
-            this.tableId = "01KFGAEV4EC3J3HBVMM4KS8R83"
+            this.tableId = "01KFGN476DNJ192MD2GGZ5Z8AA"
         }
         this.gameAct.setTableId(this.tableId)
         this.onGetTableInfoBtn()
@@ -185,30 +188,30 @@ export class HoldemMrg extends Component {
         Global.sendRequest(gameStartReq)
     }
 
-    onAction(event: Event, action: string) {
-        console.log('action =', action);
-        let gameActReq: GameActReq | null = null;
-        switch (action) {
-            case 'fold':
-                gameActReq = new GameActReq({act: 'Fold', table_id: this.tableId});
-                break;
-            case 'call':
-                gameActReq = new GameActReq({act: 'Call', table_id: this.tableId});
-                break;
-            case 'check':
-                gameActReq = new GameActReq({act: 'Check', table_id: this.tableId});
-                break;
-            case 'bet':
-                //gameActReq = new GameActReq({act: 'Bet', table_id: this.tableId});
-                break;
-            case 'raise':
-                //gameActReq = new GameActReq({act: 'Raise', table_id: this.tableId});
-                break;
-        }
-        if (gameActReq) {
-            Global.sendRequest(gameActReq);
-        }
-    }
+    // onAction(event: Event, action: string) {
+    //     console.log('action =', action);
+    //     let gameActReq: GameActReq | null = null;
+    //     switch (action) {
+    //         case 'fold':
+    //             gameActReq = new GameActReq({act: 'Fold', table_id: this.tableId});
+    //             break;
+    //         case 'call':
+    //             gameActReq = new GameActReq({act: 'Call', table_id: this.tableId});
+    //             break;
+    //         case 'check':
+    //             gameActReq = new GameActReq({act: 'Check', table_id: this.tableId});
+    //             break;
+    //         case 'bet':
+    //             //gameActReq = new GameActReq({act: 'Bet', table_id: this.tableId});
+    //             break;
+    //         case 'raise':
+    //             //gameActReq = new GameActReq({act: 'Raise', table_id: this.tableId});
+    //             break;
+    //     }
+    //     if (gameActReq) {
+    //         Global.sendRequest(gameActReq);
+    //     }
+    // }
 }
 
 
