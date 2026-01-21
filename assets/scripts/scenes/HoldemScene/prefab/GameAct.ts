@@ -27,10 +27,10 @@ export class GameAct extends Component {
         this.bet.active = is_active;
         this.raise.active = is_active;
         if (is_active) {
-            this.fold.active = current_turn_act.bet
-            this.check.active = current_turn_act.call
-            this.call.active = current_turn_act.check
-            this.bet.active = current_turn_act.fold
+            this.fold.active = current_turn_act.fold
+            this.check.active = current_turn_act.check
+            this.call.active = current_turn_act.call
+            this.bet.active = current_turn_act.bet
             this.raise.active = current_turn_act.raise
         }
 
