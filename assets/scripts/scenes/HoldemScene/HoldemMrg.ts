@@ -104,6 +104,7 @@ export class HoldemMrg extends Component {
         eventBus.on(GetTableInfoReq.METHOD,this.getTableInfoHandler)
         eventBus.on(GameStartReq.METHOD,this.GameStartHandler)
         eventBus.on(GameActReq.METHOD,this.GameActHandler)
+        this.schedule(this.onGetTableInfoBtn, 1);
     }
 
     onDisable(){
@@ -111,6 +112,7 @@ export class HoldemMrg extends Component {
         eventBus.off(GetTableInfoReq.METHOD,this.getTableInfoHandler)
         eventBus.off(GameStartReq.METHOD,this.GameStartHandler)
         eventBus.off(GameActReq.METHOD,this.GameActHandler)
+        this.unschedule(this.onGetTableInfoBtn);
     }
 
     start() {
@@ -139,7 +141,6 @@ export class HoldemMrg extends Component {
     }
 
     onLeaveTableBtn(){
-        //console.log('onLeaveTableBtn')
         if(this.tableId){
             let leaveTableReq = new LeaveTableReq({table_id: this.tableId})
             Global.sendRequest(leaveTableReq)
