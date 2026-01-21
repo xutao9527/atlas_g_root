@@ -109,6 +109,9 @@ export class HoldemMrg extends Component {
             let dealer_pos = this.seatIndexMap.get(msg.payload.dealer_pos)
             this.seats[dealer_pos].setZhang(true)
 
+            // 设置行动者按钮
+            this.gameAct.setActive(msg.payload.current_turn == msg.payload.seat_index)
+
             // 设置状态信息
             this.gameState.string = msg.payload.state
             this.gameStreet.string = msg.payload.street
