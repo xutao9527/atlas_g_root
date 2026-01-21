@@ -18,9 +18,19 @@ export class GameAct extends Component {
 
     private tableId: string = null;
 
+    setActive(is_active: boolean) {
+        this.fold.active = is_active;
+        this.check.active = is_active;
+        this.call.active = is_active;
+        this.bet.active = is_active;
+        this.raise.active = is_active;
+    }
+
     setTableId(tableId: string) {
         this.tableId = tableId
     }
+
+
 }
 
 

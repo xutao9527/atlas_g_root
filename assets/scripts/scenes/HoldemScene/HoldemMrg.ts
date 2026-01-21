@@ -59,7 +59,7 @@ export class HoldemMrg extends Component {
     }
 
     private getTableInfoHandler = (msg: AtlasWireMessage<GetTableInfoResp>) => {
-        //console.log('HoldemMrg getTableInfoHandler ', msg.payload)
+        console.log('HoldemMrg getTableInfoHandler ', msg.payload)
         if (msg.header.kind == AtlasWireKind.ResponseOk) {
             let mySeatIndex = msg.payload.seat_index
             let seatCount = msg.payload.seats.length
@@ -72,7 +72,6 @@ export class HoldemMrg extends Component {
 
                 let seat = msg.payload.seats[realIndex];
                 if (seat) {
-
                     this.seats[index].setActed(seat.acted_view)
                     this.seats[index].setActed(seat.acted_view)
                     this.seats[index].setNickName(seat.nickname)

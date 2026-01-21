@@ -2076,11 +2076,21 @@
     "__prefab": {
       "__id__": 82
     },
-    "fold": null,
-    "check": null,
-    "call": null,
-    "bet": null,
-    "raise": null,
+    "fold": {
+      "__id__": 2
+    },
+    "check": {
+      "__id__": 17
+    },
+    "call": {
+      "__id__": 32
+    },
+    "bet": {
+      "__id__": 47
+    },
+    "raise": {
+      "__id__": 62
+    },
     "_id": ""
   },
   {
