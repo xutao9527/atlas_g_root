@@ -1,4 +1,4 @@
-import {_decorator, Component, director} from 'cc';
+import {_decorator, Component, director, Label} from 'cc';
 import {Global} from "db://assets/scripts/common/Global";
 import {LeaveTableReq} from "db://assets/scripts/wire/payload/LeaveTableReq";
 import {eventBus} from "db://assets/scripts/common/EventBus";
@@ -28,11 +28,20 @@ export class HoldemMrg extends Component {
     @property([SeatNode])
     seats: SeatNode[] = [];
 
+    @property(Label)
+    gameState:Label = null;
+
+    @property(Label)
+    gameStreet:Label = null;
+
+    @property(Label)
+    potVal:Label = null;
+
     @property(CardAssets)
     cardAssets: CardAssets = null;
 
     @property(CommunityCards)
-    communityCards: CommunityCards = null;   // 6 个座位节点（拖进来）
+    communityCards: CommunityCards = null;
 
     private leaveTableHandler = (msg: AtlasWireMessage<LeaveTableResp>) => {
         //console.log('HoldemMrg leaveTableHandler ', msg)

@@ -256,7 +256,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 360,
+    "_orthoHeight": 396.92645444566415,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -4836,7 +4836,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "PotVal",
+    "_name": "BlindVal",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -5158,6 +5158,15 @@
       null,
       null
     ],
+    "gameState": {
+      "__id__": 151
+    },
+    "gameStreet": {
+      "__id__": 154
+    },
+    "potVal": {
+      "__id__": 158
+    },
     "cardAssets": null,
     "communityCards": null,
     "_id": "5bNCUWmj5Ai5V1tHf9hzjj"
