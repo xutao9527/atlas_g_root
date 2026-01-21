@@ -1,4 +1,4 @@
-import {_decorator, Component, Node, Sprite, Label, Vec3, SpriteFrame, UITransform, Color} from 'cc';
+import {_decorator, Component, Node, Sprite, Label, Vec3, SpriteFrame, Color} from 'cc';
 
 const {ccclass, property} = _decorator;
 
@@ -38,19 +38,15 @@ export class SeatNode extends Component {
     card2: Sprite = null;
 
     /// 设置元素显示隐藏
-    setActive(active: boolean) {
-        if (!active) {
-            this.zhuang.node.active = active;
-            this.balance.node.active = active;
-            this.acted.node.active = active;
-        }
-
-        //this.seatIndex.node.active = active;
-        //this.avatar.node.active = active;
-        this.nickname.node.active = active;
-
-        this.card1.node.active = active;
-        this.card2.node.active = active;
+    hide() {
+        this.zhuang.node.active = false;
+        this.balance.node.active = false;
+        this.acted.node.active = false;
+        // this.seatIndex.node.active = false;
+        // this.avatar.node.active = active;
+        this.nickname.node.active = false;
+        this.card1.node.active = false;
+        this.card2.node.active = false;
     }
 
     // 设置庄家
@@ -67,6 +63,8 @@ export class SeatNode extends Component {
         }
     }
 
+
+
     // 设置行动动作
     setActed(acted: string) {
         if (acted) {
@@ -76,6 +74,7 @@ export class SeatNode extends Component {
             this.acted.node.active = false
         }
     }
+
     // 设置余额
     setBalance(balance: string) {
         if (balance) {
@@ -89,6 +88,7 @@ export class SeatNode extends Component {
     // 设置昵称
     setNickName(nickname: string) {
         this.nickname.string = nickname
+        this.nickname.node.active = true
     }
 
     // 设置手牌
@@ -101,7 +101,7 @@ export class SeatNode extends Component {
                 this.card2.node.active = false
             }
 
-        } else{
+        } else {
             if (index === 0) {
                 this.card1.spriteFrame = frame;
                 this.card1.node.active = true
@@ -115,7 +115,11 @@ export class SeatNode extends Component {
         }
     }
 
-
+    // 显示手牌
+    showCard(is_show: boolean) {
+        this.card1.node.active = is_show
+        this.card2.node.active = is_show
+    }
 
     // 设置座位方向
     setDirection(dir: SeatDirection) {

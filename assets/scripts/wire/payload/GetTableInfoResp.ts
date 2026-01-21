@@ -15,6 +15,7 @@ export interface GetTableInfoRespProps {
     small_blind_pos: any;
     big_blind_pos: any;
     current_turn: any;
+    current_turn_act: any;
     last_raiser_pos: any;
     community_cards: any;
     hand_cards: any;
@@ -37,6 +38,7 @@ export class GetTableInfoResp extends WirePayload{
     small_blind_pos: any;
     big_blind_pos: any;
     current_turn: any;
+    current_turn_act: any;
     last_raiser_pos: any;
     community_cards: any;
     hand_cards: any;
@@ -59,6 +61,7 @@ export class GetTableInfoResp extends WirePayload{
         this.small_blind_pos = props.small_blind_pos;
         this.big_blind_pos = props.big_blind_pos;
         this.current_turn = props.current_turn;
+        this.current_turn_act = props.current_turn_act;
         this.last_raiser_pos = props.last_raiser_pos;
         this.community_cards = props.community_cards;
         this.hand_cards = props.hand_cards;

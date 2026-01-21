@@ -68,14 +68,19 @@ export class HoldemMrg extends Component {
 
                 let seat = msg.payload.seats[realIndex];
                 if (seat) {
-                    this.seats[index].setActive(true)
+
+                    this.seats[index].setActed(seat.acted_view)
                     this.seats[index].setActed(seat.acted_view)
                     this.seats[index].setNickName(seat.nickname)
                     this.seats[index].setBalance(seat.balance)
+                    if (msg.payload.state != 'Waiting'){
+                        this.seats[index].showCard(true)
+                    }
                 }
             }
             // 设置手牌
             for (const [index, card] of msg.payload.hand_cards.entries()) {
+                //console.log("设置手牌",index,card)
                 if (!card) {
                     this.seats[0].setCard(null, index);
                 }else{
@@ -137,11 +142,11 @@ export class HoldemMrg extends Component {
         this.seats[4].setDirection(SeatDirection.Left)
         this.seats[5].setDirection(SeatDirection.Down)
         for (let seat of this.seats) {
-            seat.setActive(false)
+            seat.hide()
         }
         this.tableId = Global.inst.currentTableId;
         if (!this.tableId){
-            this.tableId = "01KFDWJCWSZFNATSRZR7JEQ0GV"
+            this.tableId = "01KFFW8TSEM4BA579WX4PZBKN8"
         }
         this.onGetTableInfoBtn()
     }
