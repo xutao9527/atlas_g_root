@@ -57,13 +57,6 @@ export class GameAct extends Component {
             this.betStep =  table.big_blind_amount
             // 计算最低投注额
             let need_amount = table.current_bet + table.big_blind_amount
-            // let need_amount: number ;
-            // if (table.current_bet == 0) {
-            //     need_amount = (table.current_bet - player.street_bet) + table.big_blind_amount
-            // } else {
-            //     need_amount = (table.current_bet - player.street_bet) + (table.big_blind_amount * 2)
-            // }
-            //console.log(table.current_bet,player.street_bet,need_amount)
             // 设置投注范围
             this.setBetRange(need_amount, player.balance)
             // 当余额小于等于最低投注额,只能fold allin
@@ -116,6 +109,9 @@ export class GameAct extends Component {
 
                 this.onUpdateBetValue();
                 break;
+            case 'allin':
+                const amount = this.betMax > 5000 ? this.betMax + 999 : 999999999
+                gameActReq = new GameActReq({act: {'Raise': amount}, table_id: this.tableId});
         }
         if (gameActReq) {
             Global.sendRequest(gameActReq);
