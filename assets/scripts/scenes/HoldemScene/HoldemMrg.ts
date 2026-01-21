@@ -159,7 +159,7 @@ export class HoldemMrg extends Component {
         }
         this.tableId = Global.inst.currentTableId;
         if (!this.tableId){
-            this.tableId = "01KFFW8TSEM4BA579WX4PZBKN8"
+            this.tableId = "01KFGAEV4EC3J3HBVMM4KS8R83"
         }
         this.gameAct.setTableId(this.tableId)
         this.onGetTableInfoBtn()

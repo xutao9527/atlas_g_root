@@ -171,7 +171,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 640,
-      "y": 360,
+      "y": 360.55378061767834,
       "z": 0
     },
     "_lrot": {
@@ -256,7 +256,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 360,
+    "_orthoHeight": 360.55378061767834,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -2473,7 +2473,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "1aQ55IDEZGb4xWO4zkIxcb",
+    "fileId": "04PF52/RdIuoyJlJR79Vo1",
     "prefabRootNode": null,
     "mountedChildren": [],
     "mountedComponents": [],
@@ -2519,8 +2519,8 @@
     ],
     "value": {
       "__type__": "cc.Vec3",
-      "x": 350.097,
-      "y": -325,
+      "x": 300,
+      "y": -315,
       "z": 0
     }
   },
@@ -3448,7 +3448,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1280,
-      "height": 720
+      "height": 721.1075612353567
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",

@@ -1,4 +1,4 @@
-import {_decorator, Component, Node} from 'cc';
+import {_decorator, Component, Label, Node, Slider} from 'cc';
 import {GameActReq} from "db://assets/scripts/wire/payload/GameActReq";
 import {Global} from "db://assets/scripts/common/Global";
 
@@ -20,6 +20,34 @@ export class GameAct extends Component {
 
     private tableId: string = null;
 
+
+    private betMin = 100;
+    private betMax = 5000;
+    private betStep = 10;
+    @property(Slider)
+    betSlider: Slider = null!;
+    @property(Label)
+    betLabel: Label = null!;
+
+    setBetRange(min: number, max: number) {
+        this.betMin = min;
+        this.betMax = max;
+        // 默认滑到最小
+        this.betSlider.progress = 0;
+        this.onUpdateBetValue();
+    }
+
+    private onUpdateBetValue() {
+        const raw =
+            this.betMin +
+            this.betSlider.progress * (this.betMax - this.betMin);
+
+        const value =
+            Math.floor(raw / this.betStep) * this.betStep;
+
+        this.betLabel.string = value.toString();
+    }
+
     setActive(is_active: boolean, current_turn_act: any) {
         this.fold.active = is_active;
         this.check.active = is_active;
@@ -33,8 +61,6 @@ export class GameAct extends Component {
             this.bet.active = current_turn_act.bet
             this.raise.active = current_turn_act.raise
         }
-
-
     }
 
     setTableId(tableId: string) {
@@ -57,6 +83,10 @@ export class GameAct extends Component {
         if (gameActReq) {
             Global.sendRequest(gameActReq);
         }
+    }
+
+    onOk(){
+
     }
 }
 
