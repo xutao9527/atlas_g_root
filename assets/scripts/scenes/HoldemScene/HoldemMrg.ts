@@ -100,6 +100,11 @@ export class HoldemMrg extends Component {
             this.seats[current_turn].setCurrentTurn(true)
             let dealer_pos = this.seatIndexMap.get(msg.payload.dealer_pos)
             this.seats[dealer_pos].setZhang(true)
+
+            // 设置状态信息
+            this.gameState.string = msg.payload.state
+            this.gameStreet.string = msg.payload.street
+            this.potVal.string = String(msg.payload.pot)
         }
 
     }
