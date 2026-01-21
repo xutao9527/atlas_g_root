@@ -58,6 +58,10 @@ export class HoldemMrg extends Component {
         }
     }
 
+    private GameStartHandler = (_msg: AtlasWireMessage<GameStartResp>) => {
+        //console.log('HoldemMrg GameStartHandler ', msg)
+    }
+
     private getTableInfoHandler = (msg: AtlasWireMessage<GetTableInfoResp>) => {
         console.log('HoldemMrg getTableInfoHandler ', msg.payload)
         if (msg.header.kind == AtlasWireKind.ResponseOk) {
@@ -110,7 +114,7 @@ export class HoldemMrg extends Component {
             this.seats[dealer_pos].setZhang(true)
 
             // 设置行动者按钮
-            this.gameAct.setActive(msg.payload.current_turn == msg.payload.seat_index)
+            this.gameAct.setActive(msg.payload.current_turn == msg.payload.seat_index, msg.payload.current_turn_act)
 
             // 设置状态信息
             this.gameState.string = msg.payload.state
@@ -120,8 +124,11 @@ export class HoldemMrg extends Component {
 
     }
 
-    private GameStartHandler = (_msg: AtlasWireMessage<GameStartResp>) => {
-        //console.log('HoldemMrg GameStartHandler ', msg)
+    private GameActHandler = (msg: AtlasWireMessage<GameActResp>) => {
+        console.log('HoldemMrg GameActHandler ', msg)
+        if (msg.header.kind == AtlasWireKind.ResponseOk) {
+            this.onGetTableInfoBtn()
+        }
     }
 
     onEnable(){
@@ -178,13 +185,6 @@ export class HoldemMrg extends Component {
         Global.sendRequest(gameStartReq)
     }
 
-    private GameActHandler = (msg: AtlasWireMessage<GameActResp>) => {
-        console.log('HoldemMrg GameActHandler ', msg)
-        if (msg.header.kind == AtlasWireKind.ResponseOk) {
-            this.onGetTableInfoBtn()
-        }
-    }
-
     onAction(event: Event, action: string) {
         console.log('action =', action);
         let gameActReq: GameActReq | null = null;
@@ -197,6 +197,12 @@ export class HoldemMrg extends Component {
                 break;
             case 'check':
                 gameActReq = new GameActReq({act: 'Check', table_id: this.tableId});
+                break;
+            case 'bet':
+                //gameActReq = new GameActReq({act: 'Bet', table_id: this.tableId});
+                break;
+            case 'raise':
+                //gameActReq = new GameActReq({act: 'Raise', table_id: this.tableId});
                 break;
         }
         if (gameActReq) {
