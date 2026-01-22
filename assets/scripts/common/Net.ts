@@ -25,7 +25,7 @@ export class Net {
         this.ws.onopen = () => {
             console.log('[WS] connected');
             // ⭐ 核心：WS 建立成功 → 自动 token 认证
-            this.tryTokenAuth();
+            //this.tryTokenAuth();
         };
 
         this.ws.onmessage = async (event) => {
@@ -33,7 +33,7 @@ export class Net {
             const uint8Arr = new Uint8Array(arrayBuffer);
 
             let recv_msg= decodeMessage(uint8Arr);
-            //console.log('[WS] receive:', recv_msg);
+            console.log('[WS] receive:', recv_msg);
 
             // ⭐ 分发给全局
             eventBus.emit(recv_msg.header.method, recv_msg);
