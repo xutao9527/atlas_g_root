@@ -53,9 +53,7 @@ export class AccountMrg extends Component {
         if (msg.payload.ok) {
             this.showStatus('登录成功!');
             this.scheduleOnce(() => {
-                director.loadScene('HallScene', () => {
-                    //console.log('HallScene 已切换');
-                });
+                // director.loadScene('HallScene');
             }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
         } else {
             this.showStatus(`登录失败：${msg.payload ?? '未知错误'}`);
@@ -76,14 +74,14 @@ export class AccountMrg extends Component {
 
     onEnable() {
         //console.log("AccountMrg onEnable")
-        eventBus.on(RegisterResp.METHOD, this.registerHandler);
+        eventBus.on(RegisterReq.METHOD, this.registerHandler);
         eventBus.on(BasicAuthReq.METHOD, this.basicAuthHandler);
         eventBus.on(TokenAuthReq.METHOD, this.tokenAuthHandler);
     }
 
     onDisable() {
         //console.log("AccountMrg onDisable")
-        eventBus.off(RegisterResp.METHOD, this.registerHandler);
+        eventBus.off(RegisterReq.METHOD, this.registerHandler);
         eventBus.off(BasicAuthReq.METHOD, this.basicAuthHandler);
         eventBus.on(TokenAuthReq.METHOD, this.tokenAuthHandler);
     }
