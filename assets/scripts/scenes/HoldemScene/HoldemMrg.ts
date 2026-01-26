@@ -9,7 +9,7 @@ import {GetTableInfoResp} from "db://assets/scripts/wire/payload/GetTableInfoRes
 import {GetTableInfoReq} from "db://assets/scripts/wire/payload/GetTableInfoReq";
 import {GameStartResp} from "db://assets/scripts/wire/payload/GameStartResp";
 import {GameStartReq} from "db://assets/scripts/wire/payload/GameStartReq";
-import {CardAssets} from "db://assets/scripts/card/CardAssets";
+import {CardAssets} from "db://assets/scripts/scenes/HoldemScene/prefab/CardAssets";
 import {CommunityCards} from "db://assets/scripts/scenes/HoldemScene/prefab/CommunityCards";
 import {GameActReq} from "db://assets/scripts/wire/payload/GameActReq";
 import {GameActResp} from "db://assets/scripts/wire/payload/GameActResp";

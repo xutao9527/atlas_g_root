@@ -39,9 +39,6 @@ export class CardAssets extends Component {
         valueIndex = ((valueIndex + 1) % 13) * 4 + suitIndex
         return this.cards[valueIndex]
     }
-
-
-
 }
 
 
