@@ -315,7 +315,7 @@
     "_isSystemFontUsed": true,
     "_spacingX": 0,
     "_isItalic": false,
-    "_isBold": false,
+    "_isBold": true,
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
@@ -425,7 +425,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 155.16647338867188,
+      "width": 77.58323669433594,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -457,11 +457,11 @@
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 255,
-      "b": 255,
+      "g": 215,
+      "b": 0,
       "a": 255
     },
-    "_string": "1000000000",
+    "_string": "10000",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 27.9,
