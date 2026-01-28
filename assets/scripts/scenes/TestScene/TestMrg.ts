@@ -1,5 +1,5 @@
 import { _decorator, Component, Node } from 'cc';
-import {SeatDirection, SeatNode} from "db://assets/scripts/scenes/HoldemScene/prefab/SeatNode";
+import {SeatDirection, SeatNode} from "db://assets/scripts/scenes/prefab/SeatNode";
 
 const { ccclass, property } = _decorator;
 

@@ -2,7 +2,7 @@ import { _decorator, Component, director, instantiate, Node, Prefab } from 'cc'
 
 import {eventBus} from "db://assets/scripts/common/EventBus"
 
-import {TableItem} from "db://assets/scripts/scenes/HallScene/prefab/TableItem"
+import {TableItem} from "db://assets/scripts/scenes/prefab/TableItem"
 
 import {Global} from "db://assets/scripts/common/Global";
 import {AtlasFrame} from "db://assets/scripts/proto/base/Message";

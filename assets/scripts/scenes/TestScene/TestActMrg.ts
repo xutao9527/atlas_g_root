@@ -1,5 +1,5 @@
 import { _decorator, Component } from 'cc';
-import {GameAct} from "db://assets/scripts/scenes/HoldemScene/prefab/GameAct";
+import {GameAct} from "db://assets/scripts/scenes/prefab/GameAct";
 const { ccclass, property } = _decorator;
 
 @ccclass('TestActMrg')

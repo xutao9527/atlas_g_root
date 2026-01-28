@@ -9,12 +9,12 @@ import {GetTableInfoResp} from "db://assets/scripts/proto/entity/rpc/GetTableInf
 import {GetTableInfoReq} from "db://assets/scripts/proto/entity/rpc/GetTableInfoReq";
 import {GameStartResp} from "db://assets/scripts/proto/entity/rpc/GameStartResp";
 import {GameStartReq} from "db://assets/scripts/proto/entity/rpc/GameStartReq";
-import {CardAssets} from "db://assets/scripts/scenes/HoldemScene/prefab/CardAssets";
-import {CommunityCards} from "db://assets/scripts/scenes/HoldemScene/prefab/CommunityCards";
+import {CardAssets} from "db://assets/scripts/scenes/prefab/CardAssets";
+import {CommunityCards} from "db://assets/scripts/scenes/prefab/CommunityCards";
 import {GameActReq} from "db://assets/scripts/proto/entity/rpc/GameActReq";
 import {GameActResp} from "db://assets/scripts/proto/entity/rpc/GameActResp";
-import {SeatDirection, SeatNode} from "db://assets/scripts/scenes/HoldemScene/prefab/SeatNode";
-import {GameAct} from "db://assets/scripts/scenes/HoldemScene/prefab/GameAct";
+import {SeatDirection, SeatNode} from "db://assets/scripts/scenes/prefab/SeatNode";
+import {GameAct} from "db://assets/scripts/scenes/prefab/GameAct";
 
 const { ccclass, property } = _decorator;
 
