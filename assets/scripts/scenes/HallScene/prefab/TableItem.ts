@@ -1,6 +1,7 @@
 import {_decorator, Component, Label, Node} from 'cc';
 import {Global} from "db://assets/scripts/common/Global";
-import {SitTableReq} from "db://assets/scripts/wire/payload/SitTableReq";
+import {SitTableReq} from "db://assets/scripts/proto/entity/rpc/SitTableReq";
+
 
 const {ccclass, property} = _decorator;
 

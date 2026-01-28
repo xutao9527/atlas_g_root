@@ -1,10 +1,10 @@
 import { _decorator ,sys} from 'cc';
-import {AtlasWireMessage, WirePayload} from "db://assets/scripts/wire/base/Message";
-import {decodeMessage} from "db://assets/scripts/wire/base/Codec";
+import {AtlasFrame, AtlasFrameBody} from "db://assets/scripts/proto/base/Message";
+import {decodeMessage} from "db://assets/scripts/proto/base/Codec";
 import {eventBus} from "db://assets/scripts/common/EventBus";
-import {TokenAuthReq} from "db://assets/scripts/wire/payload/TokenAuthReq";
-import {AuthResp} from "db://assets/scripts/wire/payload/AuthResp";
-import {BasicAuthReq} from "db://assets/scripts/wire/payload/BasicAuthReq";
+import {TokenAuthReq} from "db://assets/scripts/proto/entity/rpc/TokenAuthReq";
+import {AuthResp} from "db://assets/scripts/proto/entity/rpc/AuthResp";
+import {BasicAuthReq} from "db://assets/scripts/proto/entity/rpc/BasicAuthReq";
 
 const { ccclass } = _decorator;
 
@@ -17,8 +17,8 @@ export class Net {
         if (this.ws) return;
 
         // ⭐ 只注册一次
-        eventBus.on<AuthResp>(TokenAuthReq.METHOD, this.tokenAuthHandler);
-        eventBus.on<AuthResp>(BasicAuthReq.METHOD, this.tokenAuthHandler);
+        eventBus.on<AuthResp>(TokenAuthReq.OP_CODE, this.tokenAuthHandler);
+        eventBus.on<AuthResp>(BasicAuthReq.OP_CODE, this.tokenAuthHandler);
 
         this.ws = new WebSocket(this.url);
 
@@ -36,7 +36,7 @@ export class Net {
             console.log('[WS] receive:', recv_msg);
 
             // ⭐ 分发给全局
-            eventBus.emit(recv_msg.header.method, recv_msg);
+            eventBus.emit(recv_msg.header.op_code, recv_msg);
         };
 
         this.ws.onclose = () => {
@@ -54,7 +54,7 @@ export class Net {
         this.ws = null;
     }
 
-    sendRequest<T extends WirePayload>(req: T) {
+    sendRequest<T extends AtlasFrameBody>(req: T) {
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
             const rawMsg = req.buildRawMessage();
             //console.log('[WS] send:', req.constructor.name, rawMsg);
@@ -80,7 +80,7 @@ export class Net {
         this.sendRequest(req);
     }
 
-    private tokenAuthHandler = (msg: AtlasWireMessage<AuthResp>) =>{
+    private tokenAuthHandler = (msg: AtlasFrame<AuthResp>) =>{
         if (!msg.payload.ok) {
             console.warn('[WS] token auth failed, clear token');
             sys.localStorage.removeItem('token');

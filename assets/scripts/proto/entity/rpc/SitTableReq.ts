@@ -1,5 +1,5 @@
 // @ts-ignore
-import {WirePayload} from "db://assets/scripts/wire/base/Message";
+import { AtlasFrameBody } from "db://assets/scripts/proto/base/Message";
 
 export interface SitTableReqProps {
     table_id: string;
@@ -7,16 +7,13 @@ export interface SitTableReqProps {
     buy_in: number;
 }
 
-export class SitTableReq extends WirePayload{
-    static readonly METHOD = 3 << 16 | 3;
-
+export class SitTableReq extends AtlasFrameBody {
+    static readonly OP_CODE = 3 << 16 | 3;
     table_id: string;
     seat_index: number;
     buy_in: number;
 
-    constructor(
-        props: SitTableReqProps
-    ) {
+    constructor(props: SitTableReqProps) {
         super();
         this.table_id = props.table_id;
         this.seat_index = props.seat_index;

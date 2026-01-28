@@ -1,32 +1,66 @@
-import {AtlasWireMessage, WirePayload} from "db://assets/scripts/wire/base/Message";
-
-type Handler<T extends WirePayload> = (data: AtlasWireMessage<T>) => void;
+import {AtlasFrame, AtlasFrameBody} from "db://assets/scripts/proto/base/Message";
+import {AtlasFrameKind} from "db://assets/scripts/proto/base/Header";
+type Handler<T extends AtlasFrameBody> = (data: AtlasFrame<T>) => void;
 
 class EventBus {
-    private map = new Map<string | number, Handler<WirePayload>[]>();
+    private rpc_map = new Map<string | number, Handler<AtlasFrameBody>[]>();
+    private notify_map = new Map<string | number, Handler<AtlasFrameBody>[]>();
 
-    /** 注册 handler */
-    on<T extends WirePayload>(cmd: string | number, fn: Handler<T>) {
-        const list = this.map.get(cmd) || [];
-        list.push(fn as Handler<WirePayload>);
-        this.map.set(cmd, list);
+    /** 注册 rpc handler */
+    on<T extends AtlasFrameBody>(cmd: string | number, fn: Handler<T>) {
+        const list = this.rpc_map.get(cmd) || [];
+        list.push(fn as Handler<AtlasFrameBody>);
+        this.rpc_map.set(cmd, list);
     }
 
-    /** 移除 handler，可选 */
-    off<T extends WirePayload>(cmd: string | number, fn?: Handler<T>) {
+    /** 移除 rpc handler，可选 */
+    off<T extends AtlasFrameBody>(cmd: string | number, fn?: Handler<T>) {
         if (!fn) {
-            this.map.delete(cmd);
+            this.rpc_map.delete(cmd);
             return;
         }
-        const list = this.map.get(cmd);
+        const list = this.rpc_map.get(cmd);
         if (list) {
-            this.map.set(cmd, list.filter(f => f !== fn));
+            this.rpc_map.set(cmd, list.filter(f => f !== fn));
+        }
+    }
+
+    /** 注册 notify handler */
+    on_notify<T extends AtlasFrameBody>(cmd: string | number, fn: Handler<T>) {
+        const list = this.notify_map.get(cmd) || [];
+        list.push(fn as Handler<AtlasFrameBody>);
+        this.notify_map.set(cmd, list);
+    }
+
+    /** 移除 notify handler，可选 */
+    off_notify<T extends AtlasFrameBody>(cmd: string | number, fn?: Handler<T>) {
+        if (!fn) {
+            this.notify_map.delete(cmd);
+            return;
+        }
+        const list = this.notify_map.get(cmd);
+        if (list) {
+            this.notify_map.set(cmd, list.filter(f => f !== fn));
         }
     }
 
     /** 分发消息 */
-    emit<T extends WirePayload>(cmd: string | number, data: AtlasWireMessage<T>) {
-        this.map.get(cmd)?.forEach(fn => fn(data));
+    emit<T extends AtlasFrameBody>(cmd: string | number, data: AtlasFrame<T>) {
+        switch (data.header.kind) {
+            case AtlasFrameKind.Request:
+                break;
+            case AtlasFrameKind.ResponseOk:
+                this.rpc_map.get(cmd)?.forEach(fn => fn(data));
+                break;
+            case AtlasFrameKind.ResponseErr:
+                this.rpc_map.get(cmd)?.forEach(fn => fn(data));
+                break;
+            case AtlasFrameKind.Notify:
+                this.notify_map.get(cmd)?.forEach(fn => fn(data));
+                break;
+            case AtlasFrameKind.RegNode:
+                break;
+        }
     }
 }
 

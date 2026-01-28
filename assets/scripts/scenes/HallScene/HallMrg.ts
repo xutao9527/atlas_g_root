@@ -1,15 +1,16 @@
 import { _decorator, Component } from 'cc';
-import {AtlasWireMessage} from "db://assets/scripts/wire/base/Message";
-import {GetTableListResp} from "db://assets/scripts/wire/payload/GetTableListResp";
+
 import {eventBus} from "db://assets/scripts/common/EventBus";
-import {GetTableListReq} from "db://assets/scripts/wire/payload/GetTableListReq";
 import {Global} from "db://assets/scripts/common/Global";
+import {AtlasFrame} from "db://assets/scripts/proto/base/Message";
+import {GetTableListResp} from "db://assets/scripts/proto/entity/rpc/GetTableListResp";
+import {GetTableListReq} from "db://assets/scripts/proto/entity/rpc/GetTableListReq";
 const { ccclass } = _decorator;
 
 @ccclass('HallMrg')
 export class HallMrg extends Component {
 
-    private getTableListHandler = (_msg: AtlasWireMessage<GetTableListResp>) => {
+    private getTableListHandler = (_msg: AtlasFrame<GetTableListResp>) => {
         //console.log('HallMrg getTableHandler ', msg);
     }
 
@@ -24,11 +25,11 @@ export class HallMrg extends Component {
     }
 
     onEnable(){
-        eventBus.on(GetTableListReq.METHOD, this.getTableListHandler);
+        eventBus.on(GetTableListReq.OP_CODE, this.getTableListHandler);
     }
 
     onDisable(){
-        eventBus.off(GetTableListReq.METHOD, this.getTableListHandler);
+        eventBus.off(GetTableListReq.OP_CODE, this.getTableListHandler);
     }
 
 }

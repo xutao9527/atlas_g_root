@@ -1,5 +1,5 @@
 import {_decorator, Component, Label, Node, Slider} from 'cc';
-import {GameActReq} from "db://assets/scripts/wire/payload/GameActReq";
+import {GameActReq} from "db://assets/scripts/proto/entity/rpc/GameActReq";
 import {Global} from "db://assets/scripts/common/Global";
 
 const {ccclass, property} = _decorator;
@@ -87,15 +87,15 @@ export class GameAct extends Component {
         let gameActReq: GameActReq | null = null;
         switch (action) {
             case 'fold':
-                gameActReq = new GameActReq({act: 'Fold', table_id: this.tableId});
+                gameActReq = new GameActReq({act: {kind: "Fold"}, table_id: this.tableId});
                 this.betNode.active = false
                 break;
             case 'check':
-                gameActReq = new GameActReq({act: 'Check', table_id: this.tableId});
+                gameActReq = new GameActReq({act: {kind: "Check"}, table_id: this.tableId});
                 this.betNode.active = false
                 break;
             case 'call':
-                gameActReq = new GameActReq({act: 'Call', table_id: this.tableId});
+                gameActReq = new GameActReq({act: {kind: "Call"}, table_id: this.tableId});
                 this.betNode.active = false
                 break;
             case 'bet':
@@ -106,12 +106,11 @@ export class GameAct extends Component {
             case 'raise':
                 this.betAct = BetAct.Raise
                 this.betNode.active = !this.betNode.active
-
                 this.onUpdateBetValue();
                 break;
             case 'allin':
                 const amount = this.betMax > 5000 ? this.betMax + 999 : 999999999
-                gameActReq = new GameActReq({act: {'Raise': amount}, table_id: this.tableId});
+                gameActReq = new GameActReq({act: {kind: 'Raise', amount: amount}, table_id: this.tableId});
         }
         if (gameActReq) {
             Global.sendRequest(gameActReq);
@@ -134,10 +133,10 @@ export class GameAct extends Component {
         const amount = Number(this.betLabel.string);
         switch (this.betAct) {
             case BetAct.Bet:
-                gameActReq = new GameActReq({act: {'Bet': amount}, table_id: this.tableId});
+                gameActReq = new GameActReq({act: {kind: 'Raise', amount: amount}, table_id: this.tableId});
                 break;
             case BetAct.Raise:
-                gameActReq = new GameActReq({act: {'Raise': amount}, table_id: this.tableId});
+                gameActReq = new GameActReq({act: {kind: 'Raise', amount: amount}, table_id: this.tableId});
                 break;
         }
         if (gameActReq) {

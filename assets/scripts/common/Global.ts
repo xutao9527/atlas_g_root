@@ -1,6 +1,6 @@
 import { _decorator, Component, director } from 'cc';
 import {Net} from "db://assets/scripts/common/Net";
-import {WirePayload} from "db://assets/scripts/wire/base/Message";
+import {AtlasFrameBody} from "db://assets/scripts/proto/base/Message";
 const { ccclass } = _decorator;
 
 //  27374D  526D82  9DB2BF  DDE6ED
@@ -29,7 +29,7 @@ export class Global extends Component {
         this.net.close();
     }
 
-    static sendRequest<T extends WirePayload>(req: T) {
+    static sendRequest<T extends AtlasFrameBody>(req: T) {
         Global.inst.net.sendRequest(req);
     }
 }

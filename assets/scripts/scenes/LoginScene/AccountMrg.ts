@@ -1,13 +1,13 @@
 import {_decorator, Component, EditBox, Node,Label, Color, tween, director} from 'cc';
-import {BasicAuthReq} from "db://assets/scripts/wire/payload/BasicAuthReq";
+import {BasicAuthReq} from "db://assets/scripts/proto/entity/rpc/BasicAuthReq";
 import {Global} from "db://assets/scripts/common/Global";
 
-import {AuthResp} from "db://assets/scripts/wire/payload/AuthResp";
+import {AuthResp} from "db://assets/scripts/proto/entity/rpc/AuthResp";
 import {eventBus} from "db://assets/scripts/common/EventBus";
-import {RegisterReq} from "db://assets/scripts/wire/payload/RegisterReq";
-import {RegisterResp} from "db://assets/scripts/wire/payload/RegisterResp";
-import {TokenAuthReq} from "db://assets/scripts/wire/payload/TokenAuthReq";
-import {AtlasWireMessage} from "db://assets/scripts/wire/base/Message";
+import {RegisterReq} from "db://assets/scripts/proto/entity/rpc/RegisterReq";
+import {RegisterResp} from "db://assets/scripts/proto/entity/rpc/RegisterResp";
+import {TokenAuthReq} from "db://assets/scripts/proto/entity/rpc/TokenAuthReq";
+import {AtlasFrame} from "db://assets/scripts/proto/base/Message";
 
 const {ccclass, property} = _decorator;
 
@@ -38,17 +38,16 @@ export class AccountMrg extends Component {
     @property(Node)
     status_node: Node | null = null;   // 挂一个 Label 节点
 
-    private registerHandler = (msg: AtlasWireMessage<RegisterResp>) => {
+    private registerHandler = (msg: AtlasFrame<RegisterResp>) => {
         //console.log('[AccountMrg] 收到注册响应:', msg);
         if (msg.payload.ok) {
             this.showStatus(`注册成功!`);
-
         } else {
             this.showStatus(`注册失败：${msg.payload.message ?? '未知错误'}`);
         }
     }
 
-    private basicAuthHandler = (msg: AtlasWireMessage<AuthResp>) => {
+    private basicAuthHandler = (msg: AtlasFrame<AuthResp>) => {
         //console.log('[AccountMrg]basicAuthHandler 收到登录响应:', msg);
         if (msg.payload.ok) {
             this.showStatus('登录成功!');
@@ -60,7 +59,7 @@ export class AccountMrg extends Component {
         }
     }
 
-    private tokenAuthHandler = (msg: AtlasWireMessage<AuthResp>) =>{
+    private tokenAuthHandler = (msg: AtlasFrame<AuthResp>) =>{
         //console.log('[AccountMrg]tokenAuthHandler 收到登录响应:', msg);
         if (msg.payload.ok) {
             this.showStatus('登录成功!');
@@ -74,16 +73,16 @@ export class AccountMrg extends Component {
 
     onEnable() {
         //console.log("AccountMrg onEnable")
-        eventBus.on(RegisterReq.METHOD, this.registerHandler);
-        eventBus.on(BasicAuthReq.METHOD, this.basicAuthHandler);
-        eventBus.on(TokenAuthReq.METHOD, this.tokenAuthHandler);
+        eventBus.on(RegisterReq.OP_CODE, this.registerHandler);
+        eventBus.on(BasicAuthReq.OP_CODE, this.basicAuthHandler);
+        eventBus.on(TokenAuthReq.OP_CODE, this.tokenAuthHandler);
     }
 
     onDisable() {
         //console.log("AccountMrg onDisable")
-        eventBus.off(RegisterReq.METHOD, this.registerHandler);
-        eventBus.off(BasicAuthReq.METHOD, this.basicAuthHandler);
-        eventBus.on(TokenAuthReq.METHOD, this.tokenAuthHandler);
+        eventBus.off(RegisterReq.OP_CODE, this.registerHandler);
+        eventBus.off(BasicAuthReq.OP_CODE, this.basicAuthHandler);
+        eventBus.on(TokenAuthReq.OP_CODE, this.tokenAuthHandler);
     }
 
 

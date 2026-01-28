@@ -1,8 +1,8 @@
-import {encodeMessage} from "db://assets/scripts/wire/base/Codec";
-import {AtlasWireHeader, AtlasWireKind} from "db://assets/scripts/wire/base/Header";
+import {encodeMessage} from "db://assets/scripts/proto/base/Codec";
+import {AtlasFrameHeader, AtlasFrameKind} from "db://assets/scripts/proto/base/Header";
 
-export interface AtlasWireMessage<T> {
-    header: AtlasWireHeader;
+export interface AtlasFrame<T> {
+    header: AtlasFrameHeader;
     payload: T;
 }
 
@@ -10,20 +10,20 @@ type BuildOpts = Partial<{
     idHi: number;
     idLo: number;
     slotIndex: number;
-    kind: AtlasWireKind;
+    kind: AtlasFrameKind;
     uid: Uint8Array;
 }>;
 
-export abstract class WirePayload {
+export abstract class AtlasFrameBody {
     /** 每个子类必须提供 */
-    static readonly METHOD: number;
+    static readonly OP_CODE: number;
 
     buildMessage<T extends this>(
         this: T,
         opts?: BuildOpts
-    ): AtlasWireMessage<T> {
-        const ctor = this.constructor as typeof WirePayload & {
-            METHOD: number;
+    ): AtlasFrame<T> {
+        const ctor = this.constructor as typeof AtlasFrameBody & {
+            OP_CODE: number;
         };
 
         return {
@@ -33,8 +33,8 @@ export abstract class WirePayload {
                     lo: opts?.idLo ?? 0,
                 },
                 slotIndex: opts?.slotIndex ?? 0,
-                method: ctor.METHOD,
-                kind: opts?.kind ?? AtlasWireKind.Request,
+                op_code: ctor.OP_CODE,
+                kind: opts?.kind ?? AtlasFrameKind.Request,
                 uid: opts?.uid ?? new Uint8Array(16),
             },
             payload: this,

@@ -1,18 +1,18 @@
 import {_decorator, Component, director, Label} from 'cc';
 import {Global} from "db://assets/scripts/common/Global";
-import {LeaveTableReq} from "db://assets/scripts/wire/payload/LeaveTableReq";
+import {LeaveTableReq} from "db://assets/scripts/proto/entity/rpc/LeaveTableReq";
 import {eventBus} from "db://assets/scripts/common/EventBus";
-import {AtlasWireMessage} from "db://assets/scripts/wire/base/Message";
-import {LeaveTableResp} from "db://assets/scripts/wire/payload/LeaveTableResp";
-import {AtlasWireKind} from "db://assets/scripts/wire/base/Header";
-import {GetTableInfoResp} from "db://assets/scripts/wire/payload/GetTableInfoResp";
-import {GetTableInfoReq} from "db://assets/scripts/wire/payload/GetTableInfoReq";
-import {GameStartResp} from "db://assets/scripts/wire/payload/GameStartResp";
-import {GameStartReq} from "db://assets/scripts/wire/payload/GameStartReq";
+import {AtlasFrame} from "db://assets/scripts/proto/base/Message";
+import {LeaveTableResp} from "db://assets/scripts/proto/entity/rpc/LeaveTableResp";
+import {AtlasFrameKind} from "db://assets/scripts/proto/base/Header";
+import {GetTableInfoResp} from "db://assets/scripts/proto/entity/rpc/GetTableInfoResp";
+import {GetTableInfoReq} from "db://assets/scripts/proto/entity/rpc/GetTableInfoReq";
+import {GameStartResp} from "db://assets/scripts/proto/entity/rpc/GameStartResp";
+import {GameStartReq} from "db://assets/scripts/proto/entity/rpc/GameStartReq";
 import {CardAssets} from "db://assets/scripts/scenes/HoldemScene/prefab/CardAssets";
 import {CommunityCards} from "db://assets/scripts/scenes/HoldemScene/prefab/CommunityCards";
-import {GameActReq} from "db://assets/scripts/wire/payload/GameActReq";
-import {GameActResp} from "db://assets/scripts/wire/payload/GameActResp";
+import {GameActReq} from "db://assets/scripts/proto/entity/rpc/GameActReq";
+import {GameActResp} from "db://assets/scripts/proto/entity/rpc/GameActResp";
 import {SeatDirection, SeatNode} from "db://assets/scripts/scenes/HoldemScene/prefab/SeatNode";
 import {GameAct} from "db://assets/scripts/scenes/HoldemScene/prefab/GameAct";
 
@@ -47,9 +47,9 @@ export class HoldemMrg extends Component {
     @property(GameAct)
     gameAct: GameAct = null;
 
-    private leaveTableHandler = (msg: AtlasWireMessage<LeaveTableResp>) => {
+    private leaveTableHandler = (msg: AtlasFrame<LeaveTableResp>) => {
         //console.log('HoldemMrg leaveTableHandler ', msg)
-        if(msg.header.kind == AtlasWireKind.ResponseOk &&  msg.payload.ok){
+        if(msg.header.kind == AtlasFrameKind.ResponseOk &&  msg.payload.ok){
             director.loadScene('HallScene', () => {
                 //console.log('HallScene 已切换');
             });
@@ -58,13 +58,13 @@ export class HoldemMrg extends Component {
         }
     }
 
-    private GameStartHandler = (_msg: AtlasWireMessage<GameStartResp>) => {
+    private GameStartHandler = (_msg: AtlasFrame<GameStartResp>) => {
         //console.log('HoldemMrg GameStartHandler ', msg)
     }
 
-    private getTableInfoHandler = (msg: AtlasWireMessage<GetTableInfoResp>) => {
+    private getTableInfoHandler = (msg: AtlasFrame<GetTableInfoResp>) => {
         //console.log('HoldemMrg getTableInfoHandler ', msg.payload)
-        if (msg.header.kind == AtlasWireKind.ResponseOk) {
+        if (msg.header.kind == AtlasFrameKind.ResponseOk) {
             let mySeatIndex = msg.payload.seat_index
             let seatCount = msg.payload.seats.length
             // 遍历位置,设置座位信息
@@ -79,7 +79,7 @@ export class HoldemMrg extends Component {
                     this.seats[index].setActed(seat.acted_view)
                     this.seats[index].setActed(seat.acted_view)
                     this.seats[index].setNickName(seat.nickname)
-                    this.seats[index].setBalance(seat.balance)
+                    this.seats[index].setBalance(String(seat.balance))
                     if (msg.payload.state != 'Waiting'){
                         this.seats[index].showCard(true)
                     }
@@ -127,26 +127,26 @@ export class HoldemMrg extends Component {
 
     }
 
-    private GameActHandler = (msg: AtlasWireMessage<GameActResp>) => {
+    private GameActHandler = (msg: AtlasFrame<GameActResp>) => {
         console.log('HoldemMrg GameActHandler ', msg)
-        if (msg.header.kind == AtlasWireKind.ResponseOk) {
+        if (msg.header.kind == AtlasFrameKind.ResponseOk) {
             this.onGetTableInfoBtn()
         }
     }
 
     onEnable(){
-        eventBus.on(LeaveTableReq.METHOD,this.leaveTableHandler)
-        eventBus.on(GetTableInfoReq.METHOD,this.getTableInfoHandler)
-        eventBus.on(GameStartReq.METHOD,this.GameStartHandler)
-        eventBus.on(GameActReq.METHOD,this.GameActHandler)
+        eventBus.on(LeaveTableReq.OP_CODE,this.leaveTableHandler)
+        eventBus.on(GetTableInfoReq.OP_CODE,this.getTableInfoHandler)
+        eventBus.on(GameStartReq.OP_CODE,this.GameStartHandler)
+        eventBus.on(GameActReq.OP_CODE,this.GameActHandler)
         this.schedule(this.onGetTableInfoBtn, 1);
     }
 
     onDisable(){
-        eventBus.off(LeaveTableReq.METHOD,this.leaveTableHandler)
-        eventBus.off(GetTableInfoReq.METHOD,this.getTableInfoHandler)
-        eventBus.off(GameStartReq.METHOD,this.GameStartHandler)
-        eventBus.off(GameActReq.METHOD,this.GameActHandler)
+        eventBus.off(LeaveTableReq.OP_CODE,this.leaveTableHandler)
+        eventBus.off(GetTableInfoReq.OP_CODE,this.getTableInfoHandler)
+        eventBus.off(GameStartReq.OP_CODE,this.GameStartHandler)
+        eventBus.off(GameActReq.OP_CODE,this.GameActHandler)
         this.unschedule(this.onGetTableInfoBtn);
     }
 

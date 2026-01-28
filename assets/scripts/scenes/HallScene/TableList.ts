@@ -1,12 +1,15 @@
 import { _decorator, Component, director, instantiate, Node, Prefab } from 'cc'
-import {GetTableListResp} from "db://assets/scripts/wire/payload/GetTableListResp"
-import {GetTableListReq} from "db://assets/scripts/wire/payload/GetTableListReq"
+
 import {eventBus} from "db://assets/scripts/common/EventBus"
-import {AtlasWireMessage} from "db://assets/scripts/wire/base/Message"
+
 import {TableItem} from "db://assets/scripts/scenes/HallScene/prefab/TableItem"
-import {SitTableResp} from "db://assets/scripts/wire/payload/SitTableResp";
-import {SitTableReq} from "db://assets/scripts/wire/payload/SitTableReq";
+
 import {Global} from "db://assets/scripts/common/Global";
+import {AtlasFrame} from "db://assets/scripts/proto/base/Message";
+import {GetTableListResp} from "db://assets/scripts/proto/entity/rpc/GetTableListResp";
+import {SitTableResp} from "db://assets/scripts/proto/entity/rpc/SitTableResp";
+import {GetTableListReq} from "db://assets/scripts/proto/entity/rpc/GetTableListReq";
+import {SitTableReq} from "db://assets/scripts/proto/entity/rpc/SitTableReq";
 
 const { ccclass, property } = _decorator
 
@@ -20,12 +23,12 @@ export class TableList extends Component {
     tableItemPrefab: Prefab | null = null
 
 
-    private getTableListHandler = (msg: AtlasWireMessage<GetTableListResp>) => {
+    private getTableListHandler = (msg: AtlasFrame<GetTableListResp>) => {
         // console.log('TableList getTableHandler ', msg)
         this.refreshList(msg.payload.tables)
     }
 
-    private sitTableRespHandler = (msg: AtlasWireMessage<SitTableResp>) => {
+    private sitTableRespHandler = (msg: AtlasFrame<SitTableResp>) => {
         //console.log('TableList sitTableRespHandler ', msg);
         if (msg.payload.ok) {
             Global.inst.currentTableId = msg.payload.table_id
@@ -40,13 +43,13 @@ export class TableList extends Component {
     }
 
     onEnable(){
-        eventBus.on(GetTableListReq.METHOD, this.getTableListHandler)
-        eventBus.on(SitTableReq.METHOD, this.sitTableRespHandler)
+        eventBus.on(GetTableListReq.OP_CODE, this.getTableListHandler)
+        eventBus.on(SitTableReq.OP_CODE, this.sitTableRespHandler)
     }
 
     onDisable(){
-        eventBus.off(GetTableListReq.METHOD, this.getTableListHandler)
-        eventBus.off(SitTableReq.METHOD, this.sitTableRespHandler)
+        eventBus.off(GetTableListReq.OP_CODE, this.getTableListHandler)
+        eventBus.off(SitTableReq.OP_CODE, this.sitTableRespHandler)
     }
 
     refreshList(tables: any[]) {

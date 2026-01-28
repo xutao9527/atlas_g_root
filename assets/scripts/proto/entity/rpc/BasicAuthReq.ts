@@ -1,20 +1,17 @@
 // @ts-ignore
-import {WirePayload} from "db://assets/scripts/wire/base/Message";
+import { AtlasFrameBody } from "db://assets/scripts/proto/base/Message";
 
 export interface BasicAuthReqProps {
     account: string;
     password: string;
 }
 
-export class BasicAuthReq extends WirePayload{
-    static readonly METHOD = 1 << 16 | 2;
-
+export class BasicAuthReq extends AtlasFrameBody {
+    static readonly OP_CODE = 1 << 16 | 4;
     account: string;
     password: string;
 
-    constructor(
-        props: BasicAuthReqProps
-    ) {
+    constructor(props: BasicAuthReqProps) {
         super();
         this.account = props.account;
         this.password = props.password;

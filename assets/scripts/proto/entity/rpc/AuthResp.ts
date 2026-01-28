@@ -1,5 +1,5 @@
 // @ts-ignore
-import {WirePayload} from "db://assets/scripts/wire/base/Message";
+import { AtlasFrameBody } from "db://assets/scripts/proto/base/Message";
 
 export interface AuthRespProps {
     ok: boolean;
@@ -8,17 +8,14 @@ export interface AuthRespProps {
     expire_at: number | null;
 }
 
-export class AuthResp extends WirePayload{
-    static readonly METHOD = 1 << 16 | 2;
-
+export class AuthResp extends AtlasFrameBody {
+    static readonly OP_CODE = 1 << 16 | 3;
     ok: boolean;
     uid: string | null;
     token: string | null;
     expire_at: number | null;
 
-    constructor(
-        props: AuthRespProps
-    ) {
+    constructor(props: AuthRespProps) {
         super();
         this.ok = props.ok;
         this.uid = props.uid;

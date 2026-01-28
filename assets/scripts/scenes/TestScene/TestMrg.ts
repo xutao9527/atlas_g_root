@@ -6,7 +6,6 @@ const { ccclass, property } = _decorator;
 @ccclass('TestMrg')
 export class TestMrg extends Component {
 
-
     @property(SeatNode)
     seatsUp: SeatNode = null;
     @property(SeatNode)

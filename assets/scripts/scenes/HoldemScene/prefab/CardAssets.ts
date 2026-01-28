@@ -1,4 +1,6 @@
 import { _decorator, Component, SpriteFrame } from 'cc';
+import {AtlasSuitKind} from "db://assets/scripts/proto/entity/type/AtlasSuitKind";
+import {AtlasValueKind} from "db://assets/scripts/proto/entity/type/AtlasValueKind";
 const { ccclass, property } = _decorator;
 
 const SuitIndex: Record<string, number> = {
@@ -33,7 +35,7 @@ export class CardAssets extends Component {
     @property(SpriteFrame)
     cardBack: SpriteFrame = null;
 
-    getCardFrame(suit: string, value: string): SpriteFrame {
+    getCardFrame(suit: AtlasSuitKind, value: AtlasValueKind): SpriteFrame {
         let suitIndex = SuitIndex[suit];
         let valueIndex = ValueIndex[value];
         valueIndex = ((valueIndex + 1) % 13) * 4 + suitIndex

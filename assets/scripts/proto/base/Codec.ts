@@ -1,11 +1,11 @@
 import * as msgpack from '@msgpack/msgpack';
-import {ATLAS_WIRE_HEADER_LEN, AtlasWireHeader} from "db://assets/scripts/wire/base/Header";
-import {AtlasWireMessage, WirePayload} from "db://assets/scripts/wire/base/Message";
+import {ATLAS_WIRE_HEADER_LEN, AtlasFrameHeader} from "db://assets/scripts/proto/base/Header";
+import {AtlasFrame, AtlasFrameBody} from "db://assets/scripts/proto/base/Message";
 
 const encode = (msgpack as any).default.encode;
 const decode = (msgpack as any).default.decode;
 
-export function encodeHeader(h: AtlasWireHeader): Uint8Array {
+export function encodeHeader(h: AtlasFrameHeader): Uint8Array {
     if (h.uid.length !== 16) {
         throw new Error(`AtlasWireHeader.uid must be 16 bytes, got ${h.uid.length}`);
     }
@@ -25,7 +25,7 @@ export function encodeHeader(h: AtlasWireHeader): Uint8Array {
     o += 4;
 
     // u32 method
-    view.setUint32(o, h.method >>> 0, false);
+    view.setUint32(o, h.op_code >>> 0, false);
     o += 4;
 
     // u8 kind
@@ -38,7 +38,7 @@ export function encodeHeader(h: AtlasWireHeader): Uint8Array {
     return new Uint8Array(buf);
 }
 
-export function decodeHeader(buf: Uint8Array): AtlasWireHeader {
+export function decodeHeader(buf: Uint8Array): AtlasFrameHeader {
     if (buf.length < ATLAS_WIRE_HEADER_LEN) {
         throw new Error(`Buffer too short for AtlasWireHeader: ${buf.length}`);
     }
@@ -51,7 +51,7 @@ export function decodeHeader(buf: Uint8Array): AtlasWireHeader {
     o += 4;
     const slotIndex = view.getUint32(o, false);
     o += 4;
-    const method = view.getUint32(o, false);
+    const op_code = view.getUint32(o, false);
     o += 4;
     const kind = view.getUint8(o);
     o += 1;
@@ -62,13 +62,13 @@ export function decodeHeader(buf: Uint8Array): AtlasWireHeader {
     return {
         id: {hi: idHi, lo: idLo},
         slotIndex,
-        method,
+        op_code,
         kind,
         uid: new Uint8Array(uid), // 拷贝一份
     };
 }
 
-export function encodeMessage<T>(msg: AtlasWireMessage<T>): Uint8Array {
+export function encodeMessage<T>(msg: AtlasFrame<T>): Uint8Array {
     const h = encodeHeader(msg.header);
     const p = encode(msg.payload);
     const out = new Uint8Array(h.length + p.length);
@@ -77,7 +77,7 @@ export function encodeMessage<T>(msg: AtlasWireMessage<T>): Uint8Array {
     return out;
 }
 
-export function decodeMessage<T extends WirePayload>(buf: Uint8Array): AtlasWireMessage<T> {
+export function decodeMessage<T extends AtlasFrameBody>(buf: Uint8Array): AtlasFrame<T> {
     if (buf.length < ATLAS_WIRE_HEADER_LEN) {
         throw new Error('Buffer too short to decode message');
     }
