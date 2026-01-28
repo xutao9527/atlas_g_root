@@ -6,7 +6,7 @@ export interface GetTableInfoReqProps {
 }
 
 export class GetTableInfoReq extends AtlasFrameBody {
-    static readonly OP_CODE = 3 << 16 | 2;
+    static readonly OP_CODE = 2 << 16 | 2;
     table_id: string;
 
     constructor(props: GetTableInfoReqProps) {

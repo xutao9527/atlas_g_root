@@ -5,7 +5,7 @@ export interface GetTableListReqProps {
 }
 
 export class GetTableListReq extends AtlasFrameBody {
-    static readonly OP_CODE = 3 << 16 | 1;
+    static readonly OP_CODE = 2 << 16 | 1;
 
     constructor(props: GetTableListReqProps) {
         super();

@@ -8,7 +8,7 @@ export interface SitTableRespProps {
 }
 
 export class SitTableResp extends AtlasFrameBody {
-    static readonly OP_CODE = 3 << 16 | 3;
+    static readonly OP_CODE = 2 << 16 | 3;
     ok: boolean;
     table_id: string;
     message: string | null;

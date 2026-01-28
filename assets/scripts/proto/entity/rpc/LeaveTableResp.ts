@@ -7,7 +7,7 @@ export interface LeaveTableRespProps {
 }
 
 export class LeaveTableResp extends AtlasFrameBody {
-    static readonly OP_CODE = 3 << 16 | 4;
+    static readonly OP_CODE = 2 << 16 | 4;
     ok: boolean;
     message: string | null;
 

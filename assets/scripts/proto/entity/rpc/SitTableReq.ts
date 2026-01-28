@@ -8,7 +8,7 @@ export interface SitTableReqProps {
 }
 
 export class SitTableReq extends AtlasFrameBody {
-    static readonly OP_CODE = 3 << 16 | 3;
+    static readonly OP_CODE = 2 << 16 | 3;
     table_id: string;
     seat_index: number;
     buy_in: number;

@@ -24,7 +24,7 @@ export class TableList extends Component {
 
 
     private getTableListHandler = (msg: AtlasFrame<GetTableListResp>) => {
-        // console.log('TableList getTableHandler ', msg)
+        console.log('TableList getTableHandler ', msg)
         this.refreshList(msg.payload.tables)
     }
 

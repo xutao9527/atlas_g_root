@@ -8,7 +8,7 @@ export interface GameActReqProps {
 }
 
 export class GameActReq extends AtlasFrameBody {
-    static readonly OP_CODE = 3 << 16 | 5;
+    static readonly OP_CODE = 2 << 16 | 5;
     table_id: string;
     act: PlayerActionKind;
 

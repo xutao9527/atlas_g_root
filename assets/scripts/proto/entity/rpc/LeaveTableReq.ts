@@ -6,7 +6,7 @@ export interface LeaveTableReqProps {
 }
 
 export class LeaveTableReq extends AtlasFrameBody {
-    static readonly OP_CODE = 3 << 16 | 4;
+    static readonly OP_CODE = 2 << 16 | 4;
     table_id: string;
 
     constructor(props: LeaveTableReqProps) {

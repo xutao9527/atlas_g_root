@@ -25,7 +25,7 @@ export class Net {
         this.ws.onopen = () => {
             console.log('[WS] connected');
             // ⭐ 核心：WS 建立成功 → 自动 token 认证
-            //this.tryTokenAuth();
+            this.tryTokenAuth();
         };
 
         this.ws.onmessage = async (event) => {

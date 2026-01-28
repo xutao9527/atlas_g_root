@@ -7,7 +7,7 @@ export interface GameActRespProps {
 }
 
 export class GameActResp extends AtlasFrameBody {
-    static readonly OP_CODE = 3 << 16 | 5;
+    static readonly OP_CODE = 2 << 16 | 5;
     ok: boolean;
     message: string | null;
 

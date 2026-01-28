@@ -28,7 +28,7 @@ export interface GetTableInfoRespProps {
 }
 
 export class GetTableInfoResp extends AtlasFrameBody {
-    static readonly OP_CODE = 3 << 16 | 2;
+    static readonly OP_CODE = 2 << 16 | 2;
     id: string;
     seats: (PlayerView | null)[];
     state: TableStateKind;

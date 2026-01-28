@@ -6,7 +6,7 @@ export interface GameStartReqProps {
 }
 
 export class GameStartReq extends AtlasFrameBody {
-    static readonly OP_CODE = 3 << 16 | 6;
+    static readonly OP_CODE = 2 << 16 | 6;
     table_id: string;
 
     constructor(props: GameStartReqProps) {

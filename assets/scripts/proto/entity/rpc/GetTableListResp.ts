@@ -7,7 +7,7 @@ export interface GetTableListRespProps {
 }
 
 export class GetTableListResp extends AtlasFrameBody {
-    static readonly OP_CODE = 3 << 16 | 1;
+    static readonly OP_CODE = 2 << 16 | 1;
     tables: TableView[];
 
     constructor(props: GetTableListRespProps) {

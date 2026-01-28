@@ -11,7 +11,7 @@ const { ccclass } = _decorator;
 export class HallMrg extends Component {
 
     private getTableListHandler = (_msg: AtlasFrame<GetTableListResp>) => {
-        //console.log('HallMrg getTableHandler ', msg);
+        console.log('HallMrg getTableHandler ', _msg);
     }
 
     onGetTableClick(){
