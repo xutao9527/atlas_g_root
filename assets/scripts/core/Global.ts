@@ -1,5 +1,5 @@
 import { _decorator, Component, director } from 'cc';
-import {Net} from "db://assets/scripts/common/Net";
+import {Net} from "db://assets/scripts/core/Net";
 import {AtlasFrameBody} from "db://assets/scripts/proto/base/Message";
 const { ccclass } = _decorator;
 

@@ -1,7 +1,7 @@
 import {_decorator, Component, director, Label} from 'cc';
-import {Global} from "db://assets/scripts/common/Global";
+import {Global} from "db://assets/scripts/core/Global";
 import {LeaveTableReq} from "db://assets/scripts/proto/entity/rpc/LeaveTableReq";
-import {eventBus} from "db://assets/scripts/common/EventBus";
+import {eventBus} from "db://assets/scripts/core/EventBus";
 import {AtlasFrame} from "db://assets/scripts/proto/base/Message";
 import {LeaveTableResp} from "db://assets/scripts/proto/entity/rpc/LeaveTableResp";
 import {AtlasFrameKind} from "db://assets/scripts/proto/base/Header";

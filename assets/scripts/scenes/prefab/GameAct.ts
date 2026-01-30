@@ -1,6 +1,6 @@
 import {_decorator, Component, Label, Node, Slider} from 'cc';
 import {GameActReq} from "db://assets/scripts/proto/entity/rpc/GameActReq";
-import {Global} from "db://assets/scripts/common/Global";
+import {Global} from "db://assets/scripts/core/Global";
 
 const {ccclass, property} = _decorator;
 

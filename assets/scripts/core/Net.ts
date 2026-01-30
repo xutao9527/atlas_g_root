@@ -1,7 +1,7 @@
 import { _decorator ,sys} from 'cc';
 import {AtlasFrame, AtlasFrameBody} from "db://assets/scripts/proto/base/Message";
 import {decodeMessage} from "db://assets/scripts/proto/base/Codec";
-import {eventBus} from "db://assets/scripts/common/EventBus";
+import {eventBus} from "db://assets/scripts/core/EventBus";
 import {TokenAuthReq} from "db://assets/scripts/proto/entity/rpc/TokenAuthReq";
 import {AuthResp} from "db://assets/scripts/proto/entity/rpc/AuthResp";
 import {BasicAuthReq} from "db://assets/scripts/proto/entity/rpc/BasicAuthReq";

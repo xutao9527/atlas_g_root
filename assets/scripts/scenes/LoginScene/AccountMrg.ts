@@ -1,9 +1,9 @@
 import {_decorator, Component, EditBox, Node,Label, Color, tween, director} from 'cc';
 import {BasicAuthReq} from "db://assets/scripts/proto/entity/rpc/BasicAuthReq";
-import {Global} from "db://assets/scripts/common/Global";
+import {Global} from "db://assets/scripts/core/Global";
 
 import {AuthResp} from "db://assets/scripts/proto/entity/rpc/AuthResp";
-import {eventBus} from "db://assets/scripts/common/EventBus";
+import {eventBus} from "db://assets/scripts/core/EventBus";
 import {RegisterReq} from "db://assets/scripts/proto/entity/rpc/RegisterReq";
 import {RegisterResp} from "db://assets/scripts/proto/entity/rpc/RegisterResp";
 import {TokenAuthReq} from "db://assets/scripts/proto/entity/rpc/TokenAuthReq";
@@ -52,7 +52,7 @@ export class AccountMrg extends Component {
         if (msg.payload.ok) {
             this.showStatus('登录成功!');
             this.scheduleOnce(() => {
-                // director.loadScene('HallScene');
+                director.loadScene('HallScene');
             }, 0.8); // 0.5 秒提示 + 0.3 秒淡出
         } else {
             this.showStatus(`登录失败：${msg.payload ?? '未知错误'}`);

@@ -1,5 +1,5 @@
 import {_decorator, Component, Label, Node} from 'cc';
-import {Global} from "db://assets/scripts/common/Global";
+import {Global} from "db://assets/scripts/core/Global";
 import {SitTableReq} from "db://assets/scripts/proto/entity/rpc/SitTableReq";
 
 
